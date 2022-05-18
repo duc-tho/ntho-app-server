@@ -35,7 +35,7 @@ fastify.register(require("point-of-view"), {
   },
 });
 
-fastify.register(require('@fastify/cors'), { 
+fastify.register(require('fastify-cors'), { 
   // put your options here
   origin:"*"
 })

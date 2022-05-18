@@ -1,5 +1,4 @@
 dependencies:
-  '@fastify/cors': 8.0.0
   axios: 0.27.2
   fastify: 3.28.0
   fastify-cors: 6.1.0
@@ -14,13 +13,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-gvCOUNpXsWrIQ3A4aXCLIdblL0tDq42BG/2Xw7oxbil9h11uow10ztS2GuFazNBfjbrsZ5nl+nPl5jDSjj5TSg==
-  /@fastify/cors/8.0.0:
-    dependencies:
-      fastify-plugin: 3.0.1
-      vary: 1.1.2
-    dev: false
-    resolution:
-      integrity: sha512-mB2GsA7aVwq7XG6B2OM1FMpcaiXY69ZbM1h/xDJxLEVu5ITGcs5XYrBIYTMNU2dQtzO6mzXhGd2dEKaCnB7UgQ==
   /abstract-logging/2.0.1:
     dev: false
     resolution:
@@ -708,7 +700,6 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  '@fastify/cors': ^8.0.0
   axios: ^0.27.2
   fastify: ^3.28.0
   fastify-cors: ^6.1.0
