@@ -63,8 +63,9 @@ fastify.get("/", function(request, reply) {
     };
   }
   
-  axios.get("https://api.douyin.wtf/api?url=").then((res) => {
-    reply.send(JSON.stringify(res);
+  axios.get("https://api.douyin.wtf/api?url=https://vt.tiktok.com/ZSdQa9db3/?k=1").then((res) => {
+    //console.log(res);
+    reply.send(res.data);
   });
   // The Handlebars code will be able to access the parameter values and build them into the page
   // reply.view("/src/pages/index.hbs", params);
