@@ -4,6 +4,7 @@
 */
 
 const path = require("path");
+const axios = require("axios");
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
@@ -62,8 +63,11 @@ fastify.get("/", function(request, reply) {
     };
   }
   
+  axios.get("https://api.douyin.wtf/api?url=").then((res) => {
+    reply.send(JSON.stringify(res);
+  });
   // The Handlebars code will be able to access the parameter values and build them into the page
-  reply.view("/src/pages/index.hbs", params);
+  // reply.view("/src/pages/index.hbs", params);
 });
 
 /**
