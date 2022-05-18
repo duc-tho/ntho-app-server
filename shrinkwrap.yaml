@@ -1,6 +1,8 @@
 dependencies:
+  '@fastify/cors': 8.0.0
   axios: 0.27.2
   fastify: 3.28.0
+  fastify-cors: 6.1.0
   fastify-formbody: 5.2.0
   fastify-static: 4.6.1
   handlebars: 4.7.7
@@ -12,6 +14,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-gvCOUNpXsWrIQ3A4aXCLIdblL0tDq42BG/2Xw7oxbil9h11uow10ztS2GuFazNBfjbrsZ5nl+nPl5jDSjj5TSg==
+  /@fastify/cors/8.0.0:
+    dependencies:
+      fastify-plugin: 3.0.1
+      vary: 1.1.2
+    dev: false
+    resolution:
+      integrity: sha512-mB2GsA7aVwq7XG6B2OM1FMpcaiXY69ZbM1h/xDJxLEVu5ITGcs5XYrBIYTMNU2dQtzO6mzXhGd2dEKaCnB7UgQ==
   /abstract-logging/2.0.1:
     dev: false
     resolution:
@@ -196,6 +205,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
+  /fastify-cors/6.0.3:
+    dependencies:
+      fastify-plugin: 3.0.1
+      vary: 1.1.2
+    dev: false
+    resolution:
+      integrity: sha512-fMbXubKKyBHHCfSBtsCi3+7VyVRdhJQmGes5gM+eGKkRErCdm0NaYO0ozd31BQBL1ycoTIjbqOZhJo4RTF/Vlg==
+  /fastify-cors/6.1.0:
+    dependencies:
+      fastify-cors-deprecated: /fastify-cors/6.0.3
+      process-warning: 1.0.0
+    dev: false
+    resolution:
+      integrity: sha512-QBKz32IoY/iuT74CunRY1XOSpjSTIOh9E3FxulXIBhd0D2vdgG0kDvy0eG6HA/88sRfWHeba43LkGEXPz0Rh8g==
   /fastify-error/0.3.1:
     dev: false
     resolution:
@@ -657,6 +680,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+  /vary/1.1.2:
+    dev: false
+    engines:
+      node: '>= 0.8'
+    resolution:
+      integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
   /wordwrap/1.0.0:
     dev: false
     resolution:
@@ -679,8 +708,10 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  '@fastify/cors': ^8.0.0
   axios: ^0.27.2
   fastify: ^3.28.0
+  fastify-cors: ^6.1.0
   fastify-formbody: ^5.2.0
   fastify-static: ^4.6.1
   handlebars: ^4.7.7
