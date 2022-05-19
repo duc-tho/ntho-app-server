@@ -28,17 +28,29 @@ if (seo.url === "glitch-default") {
   seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
 }
 
+let verifyUrl = (url) => {
+  let urlRegex =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
 
-let verifyUrl = url => {
-  let urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
-  
-  let urlValid = url.match(urlRegex) ? true : false;
-  
-  let tiktokRegex = ^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]twitter+)\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$
-  
-  return isValid;
-}
+  let isUrlValid = url.match(urlRegex) ? true : false;
 
+  let domainRegex =
+    /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/g;
+  let domain = url.match(domainRegex)[0];
+  let isDomainValid = false;
+
+  switch (domain) {
+    case "vt.tiktok.com":
+    case "tiktok.com":
+      isDomainValid = true;
+      break;
+    default:
+      break;
+  }
+
+  if (isUrlValid && isDomainValid) return true;
+  else return false;
+};
 
 fastify.get("/api/tiktok", function (request, reply) {
   let tiktokUrl = request.query["url"];
@@ -50,20 +62,18 @@ fastify.get("/api/tiktok", function (request, reply) {
       reason: "url parameter is require",
     });
   }
-  
+
   if (!verifyUrl(tiktokUrl)) {
     reply.statusCode = 400;
     return reply.send({
       success: false,
       reason: "url not valid",
     });
-  };
+  }
 
-  axios
-    .get(`https://api.douyin.wtf/api?url=${tiktokUrl}`)
-    .then((res) => {
-      reply.send(res.data);
-    });
+  axios.get(`https://api.douyin.wtf/api?url=${tiktokUrl}`).then((res) => {
+    reply.send(res.data);
+  });
 });
 
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
