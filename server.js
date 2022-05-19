@@ -42,6 +42,8 @@ let verifyUrl = (url) => {
   switch (domain) {
     case "vt.tiktok.com":
     case "tiktok.com":
+    case "www.tiktok.com":
+    case "www.vt.tiktok.com":
       isDomainValid = true;
       break;
     default:
@@ -59,7 +61,7 @@ fastify.get("/api/tiktok", function (request, reply) {
     reply.statusCode = 400;
     return reply.send({
       success: false,
-      reason: "url parameter is require",
+      reason: "Url parameter is require!",
     });
   }
 
@@ -67,7 +69,7 @@ fastify.get("/api/tiktok", function (request, reply) {
     reply.statusCode = 400;
     return reply.send({
       success: false,
-      reason: "url not valid",
+      reason: "Url not valid!",
     });
   }
 
