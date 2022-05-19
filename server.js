@@ -49,9 +49,12 @@ let verifyUrl = (url) => {
     default:
       break;
   }
+  
+  console.log(isUrlValid && isDomainValid);
 
   if (isUrlValid && isDomainValid) return true;
-  else return false;
+  
+  return false;
 };
 
 fastify.get("/api/tiktok", function (request, reply) {
