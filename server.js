@@ -90,3 +90,7 @@ fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
   console.log(`Your app is listening on ${address}`);
   fastify.log.info(`server listening on ${address}`);
 });
+
+setInterval(() => {
+  axios.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
