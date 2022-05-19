@@ -32,7 +32,9 @@ if (seo.url === "glitch-default") {
 let verifyUrl = url => {
   let urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
   
-  let isValid = url.match(urlRegex) ? true : false;
+  let urlValid = url.match(urlRegex) ? true : false;
+  
+  let tiktokRegex = ^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]twitter+)\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$
   
   return isValid;
 }
@@ -64,7 +66,6 @@ fastify.get("/api/tiktok", function (request, reply) {
     });
 });
 
-// Run the server and report out to the logs
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
   if (err) {
     fastify.log.error(err);
