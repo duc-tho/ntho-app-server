@@ -36,7 +36,7 @@ let verifyUrl = (url) => {
 
   let domainRegex =
     /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/g;
-  let domain = url.match(domainRegex)[0];
+  let domain = url.match(domainRegex)[0] || '';
   let isDomainValid = false;
 
   switch (domain) {
@@ -50,7 +50,7 @@ let verifyUrl = (url) => {
       break;
   }
   
-  console.log(isUrlValid && isDomainValid);
+  console.log(isUrlValid && isDomainValid, isUrlValid, isDomainValid);
 
   if (isUrlValid && isDomainValid) return true;
   
