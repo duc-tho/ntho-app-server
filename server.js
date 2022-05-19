@@ -12,7 +12,6 @@ fastify.register(require("fastify-static"), {
 
 fastify.register(require("fastify-formbody"));
 
-// point-of-view is a templating manager for fastify
 fastify.register(require("point-of-view"), {
   engine: {
     handlebars: require("handlebars"),
@@ -20,7 +19,6 @@ fastify.register(require("point-of-view"), {
 });
 
 fastify.register(require("fastify-cors"), {
-  // put your options here
   origin: "*",
 });
 
@@ -30,14 +28,18 @@ if (seo.url === "glitch-default") {
   seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
 }
 
-/**
- * Our home page route
- *
- * Returns src/pages/index.hbs with data built into it
- */
+
+let verifyUrl = url => {
+  let urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
+  
+  let isValid = url.match(urlRegex) ? true : false;
+  
+  return isValid;
+}
+
+
 fastify.get("/api/tiktok", function (request, reply) {
   let tiktokUrl = request.query["url"];
-  let urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
 
   if (!tiktokUrl) {
     reply.statusCode = 400;
@@ -46,11 +48,18 @@ fastify.get("/api/tiktok", function (request, reply) {
       reson: "url parameter is require",
     });
   }
+  
+  if (!verifyUrl(tiktokUrl)) {
+    reply.statusCode = 400;
+    return reply.send({
+      success: false,
+      reson: "url not valid",
+    });
+  };
 
   axios
-    .get("https://api.douyin.wtf/api?url=https://vt.tiktok.com/ZSdQa9db3/?k=1")
+    .get(`https://api.douyin.wtf/api?url=${tiktokUrl}`)
     .then((res) => {
-      //console.log(res);
       reply.send(res.data);
     });
 });
