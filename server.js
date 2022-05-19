@@ -36,24 +36,25 @@ let verifyUrl = (url) => {
 
   let domainRegex =
     /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/g;
-  let domain = url.match(domainRegex)[0] || '';
-  let isDomainValid = false;
+  let domain = url.match(domainRegex);
 
-  switch (domain) {
-    case "vt.tiktok.com":
-    case "tiktok.com":
-    case "www.tiktok.com":
-    case "www.vt.tiktok.com":
-      isDomainValid = true;
-      break;
-    default:
-      break;
-  }
+  let isDomainValid = false;
   
-  console.log(isUrlValid && isDomainValid, isUrlValid, isDomainValid);
+  if (domain) {
+    switch (domain[0]) {
+      case "vt.tiktok.com":
+      case "tiktok.com":
+      case "www.tiktok.com":
+      case "www.vt.tiktok.com":
+        isDomainValid = true;
+        break;
+      default:
+        break;
+    }
+  }
 
   if (isUrlValid && isDomainValid) return true;
-  
+
   return false;
 };
 
