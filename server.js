@@ -45,7 +45,7 @@ fastify.get("/api/tiktok", function (request, reply) {
     reply.statusCode = 400;
     return reply.send({
       success: false,
-      reson: "url parameter is require",
+      reason: "url parameter is require",
     });
   }
   
@@ -53,7 +53,7 @@ fastify.get("/api/tiktok", function (request, reply) {
     reply.statusCode = 400;
     return reply.send({
       success: false,
-      reson: "url not valid",
+      reason: "url not valid",
     });
   };
 
