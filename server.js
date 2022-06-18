@@ -79,7 +79,7 @@ fastify.get("/api/tiktok", function (request, reply) {
 
   axios.get(`https://api.douyin.wtf/api?url=${tiktokUrl}`).then((res) => {
     reply.send(res.data);
-  });
+  }).catch(e => console.log(e));
 });
 
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
