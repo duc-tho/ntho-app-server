@@ -83,15 +83,18 @@ fastify.get("/api/tiktok", function (request, reply) {
 });
 
 fastify.get("/test", function (request, reply) {
-  // reply.send("Hello");
-  axios.get(`https://vt.tiktok.com/ZSdcdbN2o/?k=1`, {
+  axios({
+    method: 'GET',
+    url: `https://vt.tiktok.com/ZSdcdbN2o/?k=1`,
+    maxRedirects: 0,
     headers: {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "authority": "www.tiktok.com",
-        "Accept-Encoding": "gzip, deflate",
+        "authority": "vt.tiktok.com",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "vi,en;q=0.9",
         "Connection": "keep-alive",
-        "Host": "www.tiktok.com",
-        "User-Agent": "Mozilla/5.0  (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) coc_coc_browser/86.0.170 Chrome/80.0.3987.170 Safari/537.36",
+        "Host": " vt.tiktok.com",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36",
     }
   }).then((res) => {
     reply.send(res.data);
