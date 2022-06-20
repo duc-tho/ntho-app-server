@@ -82,6 +82,22 @@ fastify.get("/api/tiktok", function (request, reply) {
   }).catch(e => console.log(e));
 });
 
+fastify.get("/test", function (request, reply) {
+  // reply.send("Hello");
+  axios.get(`https://vt.tiktok.com/ZSdcdbN2o/?k=1`, {
+    headers: {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "authority": "www.tiktok.com",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Host": "www.tiktok.com",
+        "User-Agent": "Mozilla/5.0  (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) coc_coc_browser/86.0.170 Chrome/80.0.3987.170 Safari/537.36",
+    }
+  }).then((res) => {
+    reply.send(res.data);
+  }).catch(e => reply.send(e));
+});
+
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
   if (err) {
     fastify.log.error(err);
