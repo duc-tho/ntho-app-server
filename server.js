@@ -1,107 +1,19 @@
-const path = require("path");
+
 const axios = require("axios");
+const { fastify } = require('./src/init.js');
+const { router } = require('./src/router.js');
 
-const fastify = require("fastify")({
-  logger: false,
-});
-
-fastify.register(require("fastify-static"), {
-  root: path.join(__dirname, "public"),
-  prefix: "/",
-});
-
-fastify.register(require("fastify-formbody"));
-
-fastify.register(require("point-of-view"), {
-  engine: {
-    handlebars: require("handlebars"),
-  },
-});
-
-fastify.register(require("fastify-cors"), {
-  origin: "*",
-});
-
-// Load and parse SEO data
-const seo = require("./src/seo.json");
-if (seo.url === "glitch-default") {
-  seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
-}
-
-let verifyUrl = (url) => {
-  let urlRegex =
-    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
-
-  let isUrlValid = url.match(urlRegex) ? true : false;
-
-  let domainRegex =
-    /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/g;
-  let domain = url.match(domainRegex);
-
-  let isDomainValid = false;
-  
-  if (domain) {
-    switch (domain[0]) {
-      case "vt.tiktok.com":
-      case "tiktok.com":
-      case "www.tiktok.com":
-      case "www.vt.tiktok.com":
-        isDomainValid = true;
-        break;
-      default:
-        break;
-    }
-  }
-
-  if (isUrlValid && isDomainValid) return true;
-
-  return false;
-};
-
-fastify.get("/api/tiktok", function (request, reply) {
-  let tiktokUrl = request.query["url"];
-
-  if (!tiktokUrl) {
-    reply.statusCode = 400;
-    return reply.send({
-      success: false,
-      reason: "Url parameter is require!",
-    });
-  }
-
-  if (!verifyUrl(tiktokUrl)) {
-    reply.statusCode = 400;
-    return reply.send({
-      success: false,
-      reason: "Url not valid!",
-    });
-  }
-
-  axios.get(`https://api.douyin.wtf/api?url=${tiktokUrl}`).then((res) => {
-    reply.send(res.data);
-  }).catch(e => console.log(e));
-});
-
-fastify.get("/test", function (request, reply) {
-  axios({
-    method: 'GET',
-    url: `https://vt.tiktok.com/ZSdcdbN2o/?k=1`,
-    maxRedirects: 0,
-    headers: {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36 Edg/87.0.664.66",
-    }
-  }).catch(e => console.log(e.response.headers.location));
-});
+new router(fastify).init();
 
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-  console.log(`Your app is listening on ${address}`);
-  fastify.log.info(`server listening on ${address}`);
+     if (err) {
+          fastify.log.error(err);
+          process.exit(1);
+     }
+     console.log(`Your app is listening on ${address}`);
+     fastify.log.info(`server listening on ${address}`);
 });
 
 setInterval(() => {
-  axios.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+     axios.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
