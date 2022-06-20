@@ -88,21 +88,9 @@ fastify.get("/test", function (request, reply) {
     url: `https://vt.tiktok.com/ZSdcdbN2o/?k=1`,
     maxRedirects: 0,
     headers: {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "authority": "www.tiktok.com",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "vi,en;q=0.9",
-        "Connection": "keep-alive",
-        "Host": "www.tiktok.com",
         "User-Agent": "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36 Edg/87.0.664.66",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "referer": "www.tiktok.com",
-        "Sec-Fetch-Site": "none",
     }
-  }).then((res) => {
-    reply.send(res.data);
-  }).catch(e => reply.send(e));
+  }).catch(e => console.log(e.response.headers.location));
 });
 
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
