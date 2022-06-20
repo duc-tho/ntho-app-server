@@ -98,6 +98,7 @@ fastify.get("/test", function (request, reply) {
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
         "referer": "www.tiktok.com",
+        "Sec-Fetch-Site": "none",
     }
   }).then((res) => {
     reply.send(res.data);
