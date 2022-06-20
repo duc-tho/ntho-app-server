@@ -94,7 +94,7 @@ fastify.get("/test", function (request, reply) {
         "Accept-Language": "vi,en;q=0.9",
         "Connection": "keep-alive",
         "Host": "www.tiktok.com",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36 Edg/87.0.664.66",
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
         "referer": "www.tiktok.com",
