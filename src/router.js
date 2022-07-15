@@ -1,6 +1,6 @@
 const { tiktokController } = require("./controllers/tiktok.control");
 const { db } = require('./core/db');
-const { get, child, ref, onValue } = require("firebase/database");
+const { get, child, ref, onValue, getDatabase } = require("firebase/database");
 
 class Router {
      constructor(fastify) {
@@ -11,13 +11,13 @@ class Router {
           this.fastify.get("/api/tiktok", {}, tiktokController);
        
           this.fastify.get("/test", {}, (req, res) => {
-              get(ref(db, `history/0QcnVQx1UunlrSbL9ehr`)).then((snapshot) => {
+              db.ref(`history/0QcnVQx1UunlrSbL9ehr`).once("value").then((snapshot) => {
                   console.log(snapshot.val());
               }).catch((error) => {
                   console.log(error);
               });
             
-              res.send('asdf');
+              res.send('asdf'); 
           })
      }
 }
