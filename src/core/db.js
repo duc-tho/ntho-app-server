@@ -2,14 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "API_KEY",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://DATABASE_NAME.firebaseio.com",
-  projectId: "PROJECT_ID",
-  storageBucket: "PROJECT_ID.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID",
-  measurementId: "G-MEASUREMENT_ID",
+  apiKey: process.env.API_KEY,
+  authDomain: `${process.env.PROJECT_ID}.firebaseapp.com`,
+  databaseURL: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: `${process.env.PROJECT_ID}.appspot.com`,
+  // appId: "APP_ID",
+  // measurementId: "G-MEASUREMENT_ID",
 };
 
 // Initialize Firebase
