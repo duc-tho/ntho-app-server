@@ -1,5 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getDatabase, get, set, ref, query, limitToFirst, startAt } = require("firebase/database");
+const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase/database");
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -23,7 +23,7 @@ class DBAction {
     let r = ref(this.db, `${node}${id}`);
     
     
-    return get(query(r, limitToFirst(10), startAt(0)));
+    return get(query(r, orderByKey(), startAt(page + ''), endAt("10")));
   }
 }
 
