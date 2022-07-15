@@ -2,10 +2,7 @@ const path = require('path');
 const { db } = require('./core/db');
 const { ref, set } = require("firebase/database");
 
-set(ref(db, 'users/' + 1), {
-  username: "Tho",
-  email: "Tho dut",
-});
+let history = ref(db, 'history/');
 
 const fastify = require("fastify")({
      logger: false,
