@@ -10,18 +10,14 @@ class Router {
      init() {
           this.fastify.get("/api/tiktok", {}, tiktokController);
        
-          this.fastify.get("/test", {}, (req) => {
-
-get(ref(db, `history/0QcnVQx1UunlrSbL9ehr`)).then((snapshot) => {
-  console.log('asdfasf');
-  if (snapshot.exists()) {
-    console.log(snapshot.val());
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
+          this.fastify.get("/test", {}, (req, res) => {
+              get(ref(db, `history/0QcnVQx1UunlrSbL9ehr`)).then((snapshot) => {
+                  console.log(snapshot.val());
+              }).catch((error) => {
+                  console.log(error);
+              });
+            
+              res.send('asdf');
           })
      }
 }

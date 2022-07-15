@@ -7,8 +7,6 @@ const firebaseConfig = {
   databaseURL: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
   storageBucket: `${process.env.PROJECT_ID}.appspot.com`,
-  // appId: "APP_ID",
-  // measurementId: "G-MEASUREMENT_ID",
 };
 
 // Initialize Firebase
