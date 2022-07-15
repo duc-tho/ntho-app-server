@@ -11,10 +11,10 @@ class Router {
           this.fastify.get("/api/tiktok", {}, tiktokController);
        
           this.fastify.get("/test", {}, (req, res) => {
-              let history = ref(db, `history`);
+              let history = ref(db, `histories`);
             
               get(history).then((sn) => {
-                  console.log(sn);
+                  console.log(sn.val());
               });
             
               res.send("done"); 
