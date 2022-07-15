@@ -20,7 +20,7 @@ class DBAction {
   get(node = '', id = '') {
     id = id !== '' ? '/' + id : '';
     
-    return get(ref(this.db, `${node}${id}`));
+    return get(ref(this.db, `${node}${id}`).startAt(1).limit(50));
   }
 }
 
