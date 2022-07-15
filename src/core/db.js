@@ -23,7 +23,7 @@ class DBAction {
     let r = ref(this.db, `${node}${id}`);
     
     
-    return get(query(r, orderByKey(), startAt(page + ''), endAt("10")));
+    return get(query(r, orderByKey(), startAt("0"), endAt("10")));
   }
 }
 
