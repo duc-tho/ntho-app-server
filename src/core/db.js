@@ -3,10 +3,12 @@ const { getDatabase } = require("firebase/database");
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
-  authDomain: `${process.env.PROJECT_ID}.firebaseapp.com`,
-  databaseURL: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: `${process.env.PROJECT_ID}.appspot.com`,
+  authDomain: process.env.API_KEY,
+  projectId: process.env.API_KEY,
+  storageBucket: process.env.API_KEY,
+  messagingSenderId: process.env.API_KEY,
+  appId: process.env.API_KEY,
+  measurementId: process.env.API_KEY
 };
 
 // Initialize Firebase
