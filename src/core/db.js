@@ -1,5 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getDatabase, get, set, ref } = require("firebase/database");
+const { getDatabase, get, set, ref, query, limitToFirst, startAt } = require("firebase/database");
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -17,13 +17,13 @@ class DBAction {
     this.db = getDatabase(this.app);
   }
   
-  get(node = '', id = '') {
+  get(node = '', page = 1, id = '') {
     id = id !== '' ? '/' + id : '';
     
     let r = ref(this.db, `${node}${id}`);
-    r.orderByKey().limitToFirst(50);
     
-    return get(r);
+    
+    return get(query(r, limitToFirst(10), startAt(0)));
   }
 }
 
