@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+const { initializeApp } = require("firebase/app");
+const { getDatabase } = require("firebase/database");
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -18,4 +18,4 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 
-export default database;
+exports.db = database;
