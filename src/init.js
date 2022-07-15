@@ -1,8 +1,4 @@
 const path = require('path');
-const { db } = require('./core/db');
-const { ref, set } = require("firebase/database");
-
-let history = ref(db, 'history/');
 
 const fastify = require("fastify")({
      logger: false,
