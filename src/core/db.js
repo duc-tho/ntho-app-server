@@ -1,6 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getDatabase } = require("firebase/database");
-
+const { getDatabase, get, set, ref } = require("firebase/database");
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -12,11 +11,16 @@ const firebaseConfig = {
   databaseURL: process.env.DATABASE_URL
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+class DBAction {
+  let db;
+  
+  constructor() {
+    this.db = initializeApp(firebaseConfig);
+  }
+  
+  get(node = '', id = '') {
+    get(ref(this.db, `${node}/${id}`)).then((data) => data.val());
+  }
+}
 
-
-// Initialize Realtime Database and get a reference to the service
-const database = getDatabase(app);
-
-exports.db = database;
+exports.db = new DBAction();
