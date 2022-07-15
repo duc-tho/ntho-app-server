@@ -12,14 +12,15 @@ const firebaseConfig = {
 };
 
 class DBAction {
-  let db;
-  
   constructor() {
-    this.db = initializeApp(firebaseConfig);
+    this.app = initializeApp(firebaseConfig)
+    this.db = getDatabase(this.app);
   }
   
   get(node = '', id = '') {
-    get(ref(this.db, `${node}/${id}`)).then((data) => data.val());
+    id = id ? '\\' + id : id;
+    
+    get(ref(this.db, `${node}${id}`)).then((data) => data.val());
   }
 }
 
