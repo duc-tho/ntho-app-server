@@ -18,9 +18,9 @@ class DBAction {
   }
   
   get(node = '', id = '') {
-    id = id ? '\\' + id : id;
+    id = id !== '' ? '/' + id : '';
     
-    get(ref(this.db, `${node}${id}`)).then((data) => data.val());
+    return get(ref(this.db, `${node}${id}`));
   }
 }
 
