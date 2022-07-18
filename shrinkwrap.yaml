@@ -7,6 +7,7 @@ dependencies:
   firebase: 9.9.0
   handlebars: 4.7.7
   point-of-view: 5.2.0
+  uuid: 8.3.2
 packages:
   /@fastify/ajv-compiler/1.1.0:
     dependencies:
@@ -1484,6 +1485,11 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+  /uuid/8.3.2:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
   /vary/1.1.2:
     dev: false
     engines:
@@ -1596,3 +1602,4 @@ specifiers:
   firebase: ^9.9.0
   handlebars: ^4.7.7
   point-of-view: ^5.2.0
+  uuid: ^8.3.2

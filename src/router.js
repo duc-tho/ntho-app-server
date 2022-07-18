@@ -12,6 +12,17 @@ class Router {
           this.fastify.get("/history", {}, (req, res) => {
               db.get('histories').then(data => res.send(data.val()));
           })
+       
+          this.fastify.get("/createhistory", {}, (req, res) => {
+              db.set('histories', {
+                title: "Some Vid",
+                wm: 'wn',
+                nwm: 'nwm',
+                createdAt: new Date()
+              });
+            
+              db.get('histories').then(data => res.send(data.val()));
+          })
      }
 }
 

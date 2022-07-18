@@ -1,5 +1,6 @@
 const { initializeApp } = require("firebase/app");
 const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase/database");
+const uuid = require('uuid');
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -17,13 +18,20 @@ class DBAction {
     this.db = getDatabase(this.app);
   }
   
-  get(node = '', page = 1, id = '') {
+  get(node = 'tmp', page = 1, id = '') {
     id = id !== '' ? '/' + id : '';
     
-    let r = ref(this.db, `${node}${id}`);
+    const r = ref(this.db, `${node}${id}`);
     
     
     return get(query(r, orderByKey(), startAt("0"), endAt("10")));
+  }
+  
+  set(node = 'tmp', data = {}) {
+    const id = uuid.v4();
+    const r = ref(this.db, `${node}/${id}`);
+    
+    set(r, data);
   }
 }
 
