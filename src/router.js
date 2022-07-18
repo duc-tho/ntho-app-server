@@ -1,6 +1,5 @@
 const { tiktokController } = require("./controllers/tiktok.control");
 const { tiktokHistoryController } = require("./controllers/tiktok-history.control");
-const { db } = require('./core/db');
 
 class Router {
      constructor(fastify) {
@@ -10,11 +9,9 @@ class Router {
      init() {
           this.fastify.get("/api/tiktok", {}, tiktokController);
        
-          this.fastify.get("api/history", {}, function (req, rep) {
-            db.get('histories').then(data => rep.send(data.val()));
-          });
+          this.fastify.get("/api/history", {}, tiktokHistoryController.get);
        
-          // this.fastify.post("api/history", {}, tiktokHistoryController.save);
+          this.fastify.post("/api/history", {}, tiktokHistoryController.save);
      } 
 }
 

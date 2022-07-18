@@ -11,7 +11,7 @@ exports.tiktokController = async function (request, reply) {
           });
      }
 
-     domain = verifyUrl(tiktokUrl)[0];
+     let domain = verifyUrl(tiktokUrl)[0];
 
      if (!domain) {
           reply.statusCode = 400;
