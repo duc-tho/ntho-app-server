@@ -18,10 +18,9 @@ class Router {
                 title: "Some Vid",
                 wm: 'wn',
                 nwm: 'nwm',
-                createdAt: new Date()
+                createdAt: new Date().getTime(),
+                createBy: 'anon'
               });
-            
-              db.get('histories').then(data => res.send(data.val()));
           })
      }
 }

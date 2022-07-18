@@ -24,7 +24,7 @@ class DBAction {
     const r = ref(this.db, `${node}${id}`);
     
     
-    return get(query(r, orderByKey(), startAt("0"), endAt("10")));
+    return get(r);
   }
   
   set(node = 'tmp', data = {}) {
