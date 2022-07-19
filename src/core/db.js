@@ -1,5 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase/database");
+const { getDatabase, get, set, ref, query, endAt, startAt, orderByChild } = require("firebase/database");
 const uuid = require('uuid');
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -24,7 +24,7 @@ class DBAction {
     const r = ref(this.db, `${node}${id}`);
     
     
-    return get(r);
+    return get(query(r, orderByChild('createdAt')));
   }
   
   set(node = 'tmp', data = {}) {
