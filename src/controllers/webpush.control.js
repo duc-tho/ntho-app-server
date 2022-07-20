@@ -25,7 +25,7 @@ exports.webpushController = {
           body: 'test content',
         },
       });
-
+      console.log(pushData);
       axios({
         method: "POST",
         url: "https://fcm.googleapis.com/fcm/send",
