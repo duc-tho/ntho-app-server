@@ -27,9 +27,9 @@ class DBAction {
     return get(r);
   }
   
-  set(node = 'tmp', data = {}) {
-    const id = uuid.v4();
-    const r = ref(this.db, `${node}/${id}`);
+  set(node = 'tmp', data = {}, autoId = true) {
+    const id = autoId ? '/' + uuid.v4() : '';
+    const r = ref(this.db, `${node}${id}`);
     
     set(r, data);
   }

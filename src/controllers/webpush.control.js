@@ -2,6 +2,13 @@ const { db } = require('../core/db');
 
 exports.webpushController = {
   push: (req, rep) => {
+    db.get('pushTokens').then(data => {
+        let deviceTokens = data.val();
+      
+        console.log(deviceTokens);
+      
+    });
+    
     rep.send("pút");
   },
   
