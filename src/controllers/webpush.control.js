@@ -21,8 +21,8 @@ exports.webpushController = {
       const pushData = JSON.stringify({
         registration_ids: finalDeviceTokens,
         notification: {
-          title: req.body.title ?? "",
-          body: req.body.content ?? "",
+          title: 'test',
+          body: 'test content',
         },
       });
 
@@ -30,10 +30,10 @@ exports.webpushController = {
         method: "POST",
         url: "https://fcm.googleapis.com/fcm/send",
         headers: {
-          Authorization: `key=${process.env.FIREBASE_SERVER_KEY ?? ""}`,
+          Authorization: `key=${process.env.FIREBASE_SERVER_KEY ? process.env.FIREBASE_SERVER_KEY : ''}`,
           "Content-Type": "application/json",
         },
-        
+        data: pushData
       })
         .then((res) => {
           rep.send({
@@ -61,7 +61,7 @@ exports.webpushController = {
       let deviceTokens = Object.values(data.val());
 
       if (deviceTokens.includes(req.body.deviceToken))
-        rep.send({
+        return rep.send({
           success: false,
           reason: "Token đã tồn tại!",
         });
