@@ -1,4 +1,5 @@
 const { db } = require("../core/db");
+const { default: axios } = require("axios");
 
 exports.webpushController = {
   push: (req, rep) => {
@@ -6,7 +7,7 @@ exports.webpushController = {
       let deviceTokens = Object.values(data.val());
 
       if (deviceTokens.length <= 0)
-        rep.send({
+        return rep.send({
           success: true,
           reason: "Chưa có thiết bị nào",
         });
@@ -17,10 +18,35 @@ exports.webpushController = {
 
       console.log(finalDeviceTokens);
 
-      rep.send({
-        success: true,
-        reason: "Send success thành công",
+      const pushData = JSON.stringify({
+        registration_ids: finalDeviceTokens,
+        notification: {
+          title: req.body.title ?? "",
+          body: req.body.content ?? "",
+        },
       });
+
+      axios({
+        method: "POST",
+        url: "https://fcm.googleapis.com/fcm/send",
+        headers: {
+          Authorization: `key=${process.env.FIREBASE_SERVER_KEY ?? ""}`,
+          "Content-Type": "application/json",
+        },
+        
+      })
+        .then((res) => {
+          rep.send({
+            success: true,
+            reason: "Send push noti thành công",
+          });
+        })
+        .catch((err) => {
+          rep.send({
+            success: false,
+            reason: "Gửi push noti thất bại",
+          });
+        });
     });
   },
 
