@@ -11,11 +11,11 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID,
   databaseURL: process.env.DATABASE_URL
 };
+const app = initializeApp(firebaseConfig);
 
 class DBAction {
   constructor() {
-    this.app = initializeApp(firebaseConfig)
-    this.db = getDatabase(this.app);
+    this.db = getDatabase(app);
   }
   
   get(node = 'tmp', page = 1, id = '') {

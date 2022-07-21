@@ -26,9 +26,9 @@ exports.webpushController = {
 
       axios({
         method: "POST",
-        url: "https://fcm.googleapis.com/fcm/send",
+        url: `https://fcm.googleapis.com//v1/projects/${process.env.PROJECT_ID}/messages:send`,
         headers: {
-          Authorization: `key=${process.env.FIREBASE_SERVER_KEY ? process.env.FIREBASE_SERVER_KEY : ''}`,
+          Authorization: `Bearer key=${process.env.FIREBASE_SERVER_KEY ? process.env.FIREBASE_SERVER_KEY : ''}`,
           "Content-Type": "application/json",
         },
         data: pushData
