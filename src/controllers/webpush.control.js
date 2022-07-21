@@ -16,8 +16,6 @@ exports.webpushController = {
         (deviceToken, index, self) => self.indexOf(deviceToken) === index
       );
 
-      console.log(finalDeviceTokens);
-
       const pushData = JSON.stringify({
         registration_ids: finalDeviceTokens,
         notification: {
@@ -25,7 +23,7 @@ exports.webpushController = {
           body: 'test content',
         },
       });
-      console.log(pushData);
+
       axios({
         method: "POST",
         url: "https://fcm.googleapis.com/fcm/send",
