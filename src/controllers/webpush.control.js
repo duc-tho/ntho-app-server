@@ -2,8 +2,9 @@ const { db, getToken } = require("../core/db");
 const { default: axios } = require("axios");
 
 exports.webpushController = {
-  push: (req, rep) => {
-    getToken();
+  push: async (req, rep) => {
+    let accessToken = await getToken();
+
     db.get("pushTokens").then((data) => {
       let deviceTokens = Object.values(data.val());
 
@@ -19,9 +20,12 @@ exports.webpushController = {
 
       const pushData = JSON.stringify({
         registration_ids: finalDeviceTokens,
-        notification: {
-          title: 'test',
-          body: 'test content',
+        message: {
+          topic: "matchday",
+          notification: {
+            title: "Background Message Title",
+            body: "Background message body",
+          },
         },
       });
 
@@ -29,10 +33,10 @@ exports.webpushController = {
         method: "POST",
         url: `https://fcm.googleapis.com//v1/projects/${process.env.PROJECT_ID}/messages:send`,
         headers: {
-          Authorization: `Bearer key=${process.env.FIREBASE_SERVER_KEY ? process.env.FIREBASE_SERVER_KEY : ''}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-        data: pushData
+        data: pushData,
       })
         .then((res) => {
           rep.send({
