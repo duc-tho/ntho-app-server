@@ -50,14 +50,12 @@ exports.webpushController = {
               success: true,
               reason: "Send push noti thành công",
             });
-            console.log("success");
           })
           .catch((err) => {
             rep.send({
               success: false,
               reason: "Gửi push noti thất bại",
             });
-            console.log("fail: " + JSON.stringify(err));
           });
       });
     });
