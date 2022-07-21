@@ -1,5 +1,4 @@
-const { initializeApp } = require("firebase/app");
-const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase/database");
+const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase-admin/database");
 const admin = require("firebase-admin");
 
 const serviceAccount = require("../../fbauth.json");
