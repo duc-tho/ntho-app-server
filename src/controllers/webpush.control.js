@@ -1,8 +1,9 @@
-const { db } = require("../core/db");
+const { db, getToken } = require("../core/db");
 const { default: axios } = require("axios");
 
 exports.webpushController = {
   push: (req, rep) => {
+    getToken();
     db.get("pushTokens").then((data) => {
       let deviceTokens = Object.values(data.val());
 

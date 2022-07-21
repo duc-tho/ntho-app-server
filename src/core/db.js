@@ -1,11 +1,8 @@
-const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase-admin/database");
-const admin = require("firebase-admin");
-
-const serviceAccount = require("../../fbauth.json");
-
+const { initializeApp } = require("firebase/app");
+const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase/database");
 const uuid = require('uuid');
+const google = require('google-auth-library')
 const firebaseConfig = {
-  credential: admin.credential.cert(serviceAccount),
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
@@ -15,11 +12,11 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID,
   databaseURL: process.env.DATABASE_URL
 };
-const app = admin.initializeApp(firebaseConfig);
 
 class DBAction {
   constructor() {
-    this.db = getDatabase(app);
+    this.app = initializeApp(firebaseConfig)
+    this.db = getDatabase(this.app);
   }
   
   get(node = 'tmp', page = 1, id = '') {
@@ -37,6 +34,27 @@ class DBAction {
     
     set(r, data);
   }
+}
+
+exports.getToken =  function getAccessToken() {
+  return new Promise(function(resolve, reject) {
+    const key = require('../../fbauth.json');
+    const jwtClient = new google.auth.JWT(
+      key.client_email,
+      null,
+      key.private_key,
+      ['https://www.googleapis.com/auth/cloud-platform'],
+      null
+    );
+    jwtClient.authorize(function(err, tokens) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      console.log(tokens.access_token);
+      resolve(tokens.access_token);
+    });
+  });
 }
 
 exports.db = new DBAction();
