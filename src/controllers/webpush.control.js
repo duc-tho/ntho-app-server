@@ -5,7 +5,7 @@ const { getMessaging } = require("firebase/messaging");
 exports.webpushController = {
   push: async (req, rep) => {
     let accessToken = await getToken();
-
+  console.log(req.body)
     db.get("pushTokens").then((data) => {
       let deviceTokens = Object.values(data.val() ?? []);
 
@@ -24,8 +24,8 @@ exports.webpushController = {
           message: {
             token: deviceToken,
             notification: {
-              title: "Message Title",
-              body: "Message body",
+              title: req.body.title ?? 'Chưa có title',
+              body: req.body.body ?? 'Trống',
             },
           },
         });
