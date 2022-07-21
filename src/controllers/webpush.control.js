@@ -5,13 +5,19 @@ const { getMessaging } = require("firebase/messaging");
 exports.webpushController = {
   push: async (req, rep) => {
     let accessToken = await getToken();
-  console.log(req.body)
+
+    if (!req.body || !req.body.title || req.body.body)
+      rep.send({
+        success: false,
+        reason: "Chưa có nội dung noti",
+      });
+
     db.get("pushTokens").then((data) => {
       let deviceTokens = Object.values(data.val() ?? []);
 
       if (deviceTokens.length <= 0)
         return rep.send({
-          success: true,
+          success: false,
           reason: "Chưa có thiết bị nào",
         });
 
@@ -24,8 +30,8 @@ exports.webpushController = {
           message: {
             token: deviceToken,
             notification: {
-              title: req.body.title ?? 'Chưa có title',
-              body: req.body.body ?? 'Trống',
+              title: req.body.title ?? "Chưa có title",
+              body: req.body.body ?? "Trống",
             },
           },
         });
@@ -44,14 +50,14 @@ exports.webpushController = {
               success: true,
               reason: "Send push noti thành công",
             });
-          console.log('success');
+            console.log("success");
           })
           .catch((err) => {
             rep.send({
               success: false,
               reason: "Gửi push noti thất bại",
             });
-          console.log('fail');
+            console.log("fail: " + JSON.stringify(err));
           });
       });
     });
