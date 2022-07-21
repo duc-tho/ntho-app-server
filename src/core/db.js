@@ -1,7 +1,12 @@
 const { initializeApp } = require("firebase/app");
 const { getDatabase, get, set, ref, query, endAt, startAt, orderByKey } = require("firebase/database");
+const admin = require("firebase-admin");
+
+const serviceAccount = require("../../fbauth.json");
+
 const uuid = require('uuid');
 const firebaseConfig = {
+  credential: admin.credential.cert(serviceAccount),
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
@@ -11,7 +16,7 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID,
   databaseURL: process.env.DATABASE_URL
 };
-const app = initializeApp(firebaseConfig);
+const app = admin.initializeApp(firebaseConfig);
 
 class DBAction {
   constructor() {
