@@ -7,7 +7,7 @@ exports.webpushController = {
     let accessToken = await getToken();
 
     db.get("pushTokens").then((data) => {
-      let deviceTokens = Object.values(data.val());
+      let deviceTokens = Object.values(data.val() ?? []);
 
       if (deviceTokens.length <= 0)
         return rep.send({
@@ -62,8 +62,7 @@ exports.webpushController = {
       });
 
     db.get("pushTokens").then((data) => {
-      console.log(dât)
-      let deviceTokens = Object.values(data ? data.val() : []);
+      let deviceTokens = Object.values(data.val() ?? []);
 
       if (deviceTokens.includes(req.body.deviceToken))
         return rep.send({
@@ -73,13 +72,9 @@ exports.webpushController = {
 
       const registrationTokens = [...deviceTokens, req.body.deviceToken];
 
-      // Subscribe the devices corresponding to the registration tokens to the
-      // topic.
       getMessaging()
         .subscribeToTopic(registrationTokens, "ndt-push")
         .then((response) => {
-          // See the MessagingTopicManagementResponse reference documentation
-          // for the contents of response.
           console.log("Successfully subscribed to topic:", response);
         })
         .catch((error) => {
