@@ -22,7 +22,7 @@ exports.webpushController = {
       const pushData = JSON.stringify({
         // registration_ids: finalDeviceTokens,
         message: {
-          topic: "ndt-push",
+          token: ""
           notification: {
             title: "Message Title",
             body: "Message body",
@@ -70,17 +70,7 @@ exports.webpushController = {
           reason: "Token đã tồn tại!",
         });
 
-      const registrationTokens = [...deviceTokens, req.body.deviceToken];
-
-      getMessaging()
-        .subscribeToTopic(registrationTokens, "ndt-push")
-        .then((response) => {
-          console.log("Successfully subscribed to topic:", response);
-        })
-        .catch((error) => {
-          console.log("Error subscribing to topic:", error);
-        });
-
+       console.log(deviceTokens);
       db.set("pushTokens", req.body.deviceToken);
 
       rep.send({
