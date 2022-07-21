@@ -1,5 +1,6 @@
 const { db, getToken, messenging } = require("../core/db");
 const { default: axios } = require("axios");
+const { getMessaging } = require("firebase/messaging");
 
 exports.webpushController = {
   push: async (req, rep) => {
@@ -19,12 +20,12 @@ exports.webpushController = {
       );
 
       const pushData = JSON.stringify({
-        registration_ids: finalDeviceTokens,
+        // registration_ids: finalDeviceTokens,
         message: {
-          topic: "matchday",
+          topic: "ndt-push",
           notification: {
-            title: "Background Message Title",
-            body: "Background message body",
+            title: "Message Title",
+            body: "Message body",
           },
         },
       });
@@ -61,7 +62,8 @@ exports.webpushController = {
       });
 
     db.get("pushTokens").then((data) => {
-      let deviceTokens = Object.values(data.val());
+      console.log(dât)
+      let deviceTokens = Object.values(data ? data.val() : []);
 
       if (deviceTokens.includes(req.body.deviceToken))
         return rep.send({
@@ -69,16 +71,12 @@ exports.webpushController = {
           reason: "Token đã tồn tại!",
         });
 
-      const registrationTokens = [
-        "YOUR_REGISTRATION_TOKEN_1",
-        // ...
-        "YOUR_REGISTRATION_TOKEN_n",
-      ];
+      const registrationTokens = [...deviceTokens, req.body.deviceToken];
 
       // Subscribe the devices corresponding to the registration tokens to the
       // topic.
-      messaging
-        .subscribeToTopic(registrationTokens, topic)
+      getMessaging()
+        .subscribeToTopic(registrationTokens, "ndt-push")
         .then((response) => {
           // See the MessagingTopicManagementResponse reference documentation
           // for the contents of response.

@@ -1,4 +1,4 @@
-const { initializeApp, getMessaging } = require("firebase/app");
+const { initializeApp, } = require("firebase/app");
 
 const {
   getDatabase,
@@ -24,8 +24,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-exports.messenging = getMessaging(app);
 
 class DBAction {
   constructor() {
