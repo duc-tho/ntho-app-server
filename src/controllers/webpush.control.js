@@ -1,4 +1,4 @@
-const { db, getToken } = require("../core/db");
+const { db, getToken, messenging } = require("../core/db");
 const { default: axios } = require("axios");
 
 exports.webpushController = {
@@ -67,6 +67,25 @@ exports.webpushController = {
         return rep.send({
           success: false,
           reason: "Token đã tồn tại!",
+        });
+
+      const registrationTokens = [
+        "YOUR_REGISTRATION_TOKEN_1",
+        // ...
+        "YOUR_REGISTRATION_TOKEN_n",
+      ];
+
+      // Subscribe the devices corresponding to the registration tokens to the
+      // topic.
+      messaging
+        .subscribeToTopic(registrationTokens, topic)
+        .then((response) => {
+          // See the MessagingTopicManagementResponse reference documentation
+          // for the contents of response.
+          console.log("Successfully subscribed to topic:", response);
+        })
+        .catch((error) => {
+          console.log("Error subscribing to topic:", error);
         });
 
       db.set("pushTokens", req.body.deviceToken);

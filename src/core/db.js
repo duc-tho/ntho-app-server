@@ -1,4 +1,5 @@
-const { initializeApp } = require("firebase/app");
+const { initializeApp, getMessaging } = require("firebase/app");
+
 const {
   getDatabase,
   get,
@@ -22,10 +23,13 @@ const firebaseConfig = {
   databaseURL: process.env.DATABASE_URL,
 };
 
+const app = initializeApp(firebaseConfig);
+
+exports.messenging = getMessaging(app);
+
 class DBAction {
   constructor() {
-    this.app = initializeApp(firebaseConfig);
-    this.db = getDatabase(this.app);
+    this.db = getDatabase(app);
   }
 
   get(node = "tmp", page = 1, id = "") {
