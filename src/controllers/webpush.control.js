@@ -19,38 +19,41 @@ exports.webpushController = {
         (deviceToken, index, self) => self.indexOf(deviceToken) === index
       );
 
-      const pushData = JSON.stringify({
-        // registration_ids: finalDeviceTokens,
-        message: {
-          token: ""
-          notification: {
-            title: "Message Title",
-            body: "Message body",
+      finalDeviceTokens.forEach((deviceToken) => {
+        const pushData = JSON.stringify({
+          message: {
+            token: deviceToken,
+            notification: {
+              title: "Message Title",
+              body: "Message body",
+            },
           },
-        },
-      });
-
-      axios({
-        method: "POST",
-        url: `https://fcm.googleapis.com//v1/projects/${process.env.PROJECT_ID}/messages:send`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        data: pushData,
-      })
-        .then((res) => {
-          rep.send({
-            success: true,
-            reason: "Send push noti thành công",
-          });
-        })
-        .catch((err) => {
-          rep.send({
-            success: false,
-            reason: "Gửi push noti thất bại",
-          });
         });
+
+        axios({
+          method: "POST",
+          url: `https://fcm.googleapis.com//v1/projects/${process.env.PROJECT_ID}/messages:send`,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          data: pushData,
+        })
+          .then((res) => {
+            rep.send({
+              success: true,
+              reason: "Send push noti thành công",
+            });
+          console.log('success');
+          })
+          .catch((err) => {
+            rep.send({
+              success: false,
+              reason: "Gửi push noti thất bại",
+            });
+          console.log('fail');
+          });
+      });
     });
   },
 
@@ -70,7 +73,7 @@ exports.webpushController = {
           reason: "Token đã tồn tại!",
         });
 
-       console.log(deviceTokens);
+      console.log(deviceTokens);
       db.set("pushTokens", req.body.deviceToken);
 
       rep.send({
