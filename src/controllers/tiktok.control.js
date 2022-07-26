@@ -42,6 +42,7 @@ exports.tiktokController = async function (request, reply) {
      });
 
      axios.get(`https://api.tiktokv.com/aweme/v1/multi/aweme/detail/?aweme_ids=%5B${id}%5D`).then((response) => {
+         console.log(response)
           reply.send({
                'status': 'success',
                'url_type': 'video',
