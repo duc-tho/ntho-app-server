@@ -50,5 +50,8 @@ exports.tiktokController = async function (request, reply) {
                'nwm_video_url': response.data["aweme_details"][0]["video"]["play_addr"]["url_list"][0],
                'wm_video_url': response.data["aweme_details"][0]["video"]['download_addr']['url_list'][0] || 'None',
           });
-     }).catch(e => console.log(e));
+     }).catch(e => reply.send({
+          success: false,
+          reason: "Không thể lấy dữ liệu video! Có thể là lỗi api tiktok",
+     }));
 }
