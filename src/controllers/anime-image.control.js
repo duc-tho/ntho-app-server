@@ -38,9 +38,17 @@ exports.animeImageController = async (req, rep) => {
     "succubus",
   ];
 
-  let random = Math.floor(Math.random() * 36);
-  let type = sfw.concat(nsf)
+  let types = sfw.concat(nsfw);
+  let randomTypeIndex = Math.floor(Math.random() * types.length + 1);
+  let randomType = types[randomTypeIndex];
   
+  if (typeof akaneko[randomType] == 'function') {
+    let url = await akaneko[randomType]();
+    return rep.send(url);
+  }
   
-  rep.send(url);
+  if (typeof akaneko.nsfw[randomType] == 'function') {
+    let url = await akaneko.nsfw[randomType]();
+    return rep.send(url);
+  }
 };
