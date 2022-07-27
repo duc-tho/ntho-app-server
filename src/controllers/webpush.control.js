@@ -77,7 +77,6 @@ exports.webpushController = {
           reason: "Token đã tồn tại!",
         });
 
-      console.log(deviceTokens);
       db.set("pushTokens", req.body.deviceToken);
 
       rep.send({
