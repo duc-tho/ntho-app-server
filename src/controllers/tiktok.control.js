@@ -41,16 +41,20 @@ exports.tiktokController = async function (request, reply) {
           reason: "Không thể lấy dữ liệu video!",
      });
 
-     axios.get(`https://api.tiktokv.com/aweme/v1/multi/aweme/detail/?aweme_ids=%5B${id}%5D`).then((response) => {
-          reply.send({
-               'status': 'success',
-               'url_type': 'video',
-               'video_title': response.data["aweme_details"][0]["desc"],
-               'nwm_video_url': response.data["aweme_details"][0]["video"]["play_addr"]["url_list"][0],
-               'wm_video_url': response.data["aweme_details"][0]["video"]['download_addr']['url_list'][0] || 'None',
-          });
-     }).catch(e => reply.send({
+     axios.get(`https://api.tiktokv.com/aweme/v1/aweme/detail/?aweme_id=${id}`).then((response) => {
+          console.log(response.data)
+          // reply.send({
+          //      'status': 'success',
+          //      'url_type': 'video',
+          //      'video_title': response.data["aweme_details"]["desc"],
+          //      'nwm_video_url': response.data["aweme_details"]["video"]["play_addr"]["url_list"][0],
+          //      'wm_video_url': response.data["aweme_details"]["video"]['download_addr']['url_list'][0] || 'None',
+          // });
+     }).catch(e => {
+       console.log(e);
+       reply.send({
           success: false,
           reason: "Không thể lấy dữ liệu video! Có thể là lỗi api tiktok",
-     }));
+       })
+     });
 }
