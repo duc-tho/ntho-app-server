@@ -42,14 +42,13 @@ exports.tiktokController = async function (request, reply) {
      });
 
      axios.get(`https://api.tiktokv.com/aweme/v1/aweme/detail/?aweme_id=${id}`).then((response) => {
-          console.log(response.data)
-          // reply.send({
-          //      'status': 'success',
-          //      'url_type': 'video',
-          //      'video_title': response.data["aweme_details"]["desc"],
-          //      'nwm_video_url': response.data["aweme_details"]["video"]["play_addr"]["url_list"][0],
-          //      'wm_video_url': response.data["aweme_details"]["video"]['download_addr']['url_list'][0] || 'None',
-          // });
+          reply.send({
+               'status': 'success',
+               'url_type': 'video',
+               'video_title': response.data["aweme_detail"]["desc"],
+               'nwm_video_url': response.data["aweme_detail"]["video"]["play_addr"]["url_list"][0],
+               'wm_video_url': response.data["aweme_detail"]["video"]['download_addr']['url_list'][0] || 'None',
+          });
      }).catch(e => {
        console.log(e);
        reply.send({
