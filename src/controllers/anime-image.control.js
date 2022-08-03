@@ -1,4 +1,5 @@
 const akaneko = require("akaneko");
+const neko = new require('nekos.life')();
 
 exports.animeImageController = async (req, rep) => {
   let sfw = ["neko", "lewdNeko", "lewdBomb", "wallpapers", "mobileWallpapers"];
