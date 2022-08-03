@@ -16,4 +16,4 @@ fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
 
 setInterval(() => {
      axios.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 180000); //a
+}, 180000);
