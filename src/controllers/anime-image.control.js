@@ -39,7 +39,8 @@ exports.animeImageController = async (req, rep) => {
   let randomTypeIndex = Math.floor(Math.random() * types.length + 1);
   let randomType = types[randomTypeIndex];
 
-  if (typeof akaneko[randomType] == "function") {
+  try {
+   if (typeof akaneko[randomType] == "function") {
     let url = await akaneko[randomType]();
     return rep.send(url);
   }
@@ -47,5 +48,8 @@ exports.animeImageController = async (req, rep) => {
   if (typeof akaneko.nsfw[randomType] == "function") {
     let url = await akaneko.nsfw[randomType]();
     return rep.send(url);
+  }   
+  } catch {
+    rep.send('https://64.media.tumblr.com/a186a898675f408b2a6b4bca5243744e/tumblr_ppwlhaQHuA1vqi0muo1_400.gifv')
   }
 };
