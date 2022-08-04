@@ -21,10 +21,8 @@ exports.animeImageController = async (req, rep) => {
     "neko.sfw.feed",
     "neko.sfw.cuddle",
     "neko.sfw.nekoGif",
-    "neko.sfw.kemonomimi",
     "neko.sfw.holo",
     "neko.sfw.smug",
-    "neko.sfw.baka",
     "neko.sfw.woof",
     "neko.sfw.spoiler",
     "neko.sfw.wallpaper",
@@ -68,7 +66,7 @@ exports.animeImageController = async (req, rep) => {
 
   let allowNsfw = req.query["allowNsfw"];
   let types = allowNsfw ? sfw.concat(nsfw) : sfw;
-  let randomTypeIndex = Math.floor(Math.random() * types.length + 1);
+  let randomTypeIndex = Math.floor(Math.random() * types.length);
   let selectedType = types[randomTypeIndex];
   let selectedTypeInfo = {
     module: selectedType.split(".")[0],
@@ -102,8 +100,9 @@ exports.animeImageController = async (req, rep) => {
         break;
     }
     
-    console.log(url, selectedType)
-    await rep.send(url);
+    if(url.split(' ').length > 1) url = url.split(' ')[0];
+    
+    return rep.send(url);
   } catch (e) {
     console.error(e);
     rep.send(
