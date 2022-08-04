@@ -1,6 +1,5 @@
-const { db, getToken, messenging } = require("../core/db");
+const { db, getToken } = require("../core/db");
 const { default: axios } = require("axios");
-const { getMessaging } = require("firebase/messaging");
 
 exports.webpushController = {
   push: async (req, rep) => {

@@ -1,4 +1,4 @@
-const { verifyUrl, getIdFromUrl, getOriginUrl } = require("../core/url");
+const { verifyUrl, getIdFromUrl } = require("../core/url");
 const { default: axios } = require("axios");
 exports.tiktokController = async function (request, reply) {
   let tiktokUrl = request.query["url"];

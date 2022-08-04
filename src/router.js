@@ -20,6 +20,10 @@ class Router {
     this.fastify.post("/api/pushnoti", {}, webpushController.push);
 
     this.fastify.get("/api/animg", {}, animeImageController);
+
+    this.fastify.get("/", {}, (req, res) => res.send('Api is running :3'));
+
+    this.fastify.get("/keep-active", {}, (req, res) => res.send('Re-active :D'));
   }
 }
 
