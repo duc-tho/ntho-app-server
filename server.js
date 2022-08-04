@@ -18,4 +18,4 @@ setInterval(() => {
   axios.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/keep-active`)
     .then(() => console.log('Request keep active successfully!'))
     .catch(() => console.log('Request keep active failed!'));
-}, 10000);
+}, 120000);
