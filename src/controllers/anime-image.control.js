@@ -41,15 +41,15 @@ exports.animeImageController = async (req, rep) => {
   let randomType = types[randomTypeIndex];
 
   try {
-   if (typeof akaneko[randomType] == "function") {
-    let url = await akaneko[randomType]();
-    return rep.send(url);
-  }
+    if (typeof akaneko[randomType] == "function") {
+      let url = await akaneko[randomType]();
+      return rep.send(url);
+    }
 
-  if (typeof akaneko.nsfw[randomType] == "function") {
-    let url = await akaneko.nsfw[randomType]();
-    return rep.send(url);
-  }   
+    if (typeof akaneko.nsfw[randomType] == "function") {
+      let url = await akaneko.nsfw[randomType]();
+      return rep.send(url);
+    }
   } catch {
     rep.send('https://64.media.tumblr.com/a186a898675f408b2a6b4bca5243744e/tumblr_ppwlhaQHuA1vqi0muo1_400.gifv')
   }

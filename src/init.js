@@ -1,24 +1,24 @@
 const path = require('path');
 
 const fastify = require("fastify")({
-     logger: false,
+  logger: false,
 });
 
 fastify.register(require("@fastify/static"), {
-     root: path.join(__dirname, "public"),
-     prefix: "/",
+  root: path.join(__dirname, "public"),
+  prefix: "/",
 });
 
 fastify.register(require("@fastify/formbody"));
 
 fastify.register(require("point-of-view"), {
-     engine: {
-          handlebars: require("handlebars"),
-     },
+  engine: {
+    handlebars: require("handlebars"),
+  },
 });
 
 fastify.register(require("@fastify/cors"), {
-     origin: "*",
+  origin: "*",
 });
 
 exports.fastify = fastify;
