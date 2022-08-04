@@ -65,6 +65,7 @@ exports.animeImageController = async (req, rep) => {
   ];
 
   let allowNsfw = req.query["allowNsfw"];
+  console.log(allowNsfw);
   let types = allowNsfw ? sfw.concat(nsfw) : sfw;
   let randomTypeIndex = Math.floor(Math.random() * types.length);
   let selectedType = types[randomTypeIndex];
