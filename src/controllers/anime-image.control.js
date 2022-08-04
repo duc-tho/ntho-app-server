@@ -69,46 +69,7 @@ exports.animeImageController = async (req, rep) => {
     "aka.nsfw.school",
     "aka.nsfw.yuri",
     "aka.nsfw.zettaiRyouiki",
-    "aka.nsfw.succubus",
-    "neko.nsfw.randomHentaiGif",
-    "neko.nsfw.pussy",
-    "neko.nsfw.nekoGif",
-    "neko.nsfw.neko",
-    "neko.nsfw.lesbian",
-    "neko.nsfw.kuni",
-    "neko.nsfw.cumsluts",
-    "neko.nsfw.classic",
-    "neko.nsfw.boobs",
-    "neko.nsfw.bJ",
-    "neko.nsfw.anal",
-    "neko.nsfw.avatar",
-    "neko.nsfw.yuri",
-    "neko.nsfw.trap",
-    "neko.nsfw.tits",
-    "neko.nsfw.girlSoloGif",
-    "neko.nsfw.girlSolo",
-    "neko.nsfw.pussyWankGif",
-    "neko.nsfw.pussyArt",
-    "neko.nsfw.kemonomimi",
-    "neko.nsfw.kitsune",
-    "neko.nsfw.keta",
-    "neko.nsfw.holo",
-    "neko.nsfw.holoEro",
-    "neko.nsfw.hentai",
-    "neko.nsfw.futanari",
-    "neko.nsfw.femdom",
-    "neko.nsfw.feetGif",
-    "neko.nsfw.eroFeet",
-    "neko.nsfw.feet",
-    "neko.nsfw.ero",
-    "neko.nsfw.eroKitsune",
-    "neko.nsfw.eroKemonomimi",
-    "neko.nsfw.eroNeko",
-    "neko.nsfw.eroYuri",
-    "neko.nsfw.cumArts",
-    "neko.nsfw.blowJob",
-    "neko.nsfw.spank",
-    "neko.nsfw.gasm",
+    "aka.nsfw.succubus"
   ];
 
   let allowNsfw = req.query["allowNsfw"];
@@ -120,7 +81,7 @@ exports.animeImageController = async (req, rep) => {
     moduleType: selectedType.split(".")[1],
     imageType: selectedType.split(".")[2],
   };
-
+  console.log(await neko.nsfw.pussyWankGif())
   try {
     let url =
       "https://64.media.tumblr.com/a186a898675f408b2a6b4bca5243744e/tumblr_ppwlhaQHuA1vqi0muo1_400.gifv";
@@ -147,7 +108,7 @@ exports.animeImageController = async (req, rep) => {
           typeof neko[selectedTypeInfo.imageType] == "function"
         )
           neko.sfw[selectedTypeInfo.imageType]().then((retUrl) =>
-            rep.send(retUrl)
+            console.log(retUrl)
           );
 
         if (
@@ -155,7 +116,7 @@ exports.animeImageController = async (req, rep) => {
           typeof neko[selectedTypeInfo.imageType] == "function"
         )
           neko.nsfw[selectedTypeInfo.imageType]().then((retUrl) =>
-            rep.send(retUrl)
+            console.log(retUrl)
           );
 
         break;
