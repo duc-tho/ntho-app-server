@@ -17,7 +17,7 @@
     "firebase": "^9.9.0",
     "google-auth-library": "^8.1.1",
     "handlebars": "^4.7.7",
-    "nekos.life": "^3.0.0",
+    "nekos.life": "^2.0.9",
     "point-of-view": "^5.2.0",
     "uuid": "^8.3.2"
   },
