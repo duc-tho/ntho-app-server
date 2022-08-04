@@ -20,11 +20,6 @@ exports.animeImageController = async (req, rep) => {
     "neko.sfw.foxGirl",
     "neko.sfw.feed",
     "neko.sfw.cuddle",
-    "neko.sfw.why",
-    "neko.sfw.catText",
-    "neko.sfw.OwOify",
-    "neko.sfw.eightBall",
-    "neko.sfw.fact",
     "neko.sfw.nekoGif",
     "neko.sfw.kemonomimi",
     "neko.sfw.holo",
@@ -33,7 +28,6 @@ exports.animeImageController = async (req, rep) => {
     "neko.sfw.woof",
     "neko.sfw.spoiler",
     "neko.sfw.wallpaper",
-    "neko.sfw.goose",
     "neko.sfw.gecg",
     "neko.sfw.avatar",
     "neko.sfw.waifu",
@@ -69,7 +63,7 @@ exports.animeImageController = async (req, rep) => {
     "aka.nsfw.school",
     "aka.nsfw.yuri",
     "aka.nsfw.zettaiRyouiki",
-    "aka.nsfw.succubus"
+    "aka.nsfw.succubus",
   ];
 
   let allowNsfw = req.query["allowNsfw"];
@@ -81,7 +75,7 @@ exports.animeImageController = async (req, rep) => {
     moduleType: selectedType.split(".")[1],
     imageType: selectedType.split(".")[2],
   };
-  console.log(await neko.nsfw.pussyWankGif())
+  
   try {
     let url =
       "https://64.media.tumblr.com/a186a898675f408b2a6b4bca5243744e/tumblr_ppwlhaQHuA1vqi0muo1_400.gifv";
@@ -100,27 +94,16 @@ exports.animeImageController = async (req, rep) => {
         )
           url = await akaneko.nsfw[selectedTypeInfo.imageType]();
 
-        rep.send(url);
         break;
       case "neko":
-        if (
-          selectedTypeInfo.moduleType === "sfw" &&
-          typeof neko[selectedTypeInfo.imageType] == "function"
-        )
-          neko.sfw[selectedTypeInfo.imageType]().then((retUrl) =>
-            console.log(retUrl)
-          );
-
-        if (
-          selectedTypeInfo.moduleType === "nsfw" &&
-          typeof neko[selectedTypeInfo.imageType] == "function"
-        )
-          neko.nsfw[selectedTypeInfo.imageType]().then((retUrl) =>
-            console.log(retUrl)
-          );
-
+        if (typeof neko[selectedTypeInfo.imageType] == "function")
+          url = (await neko[selectedTypeInfo.imageType]())['url'] ?? url;
+        
         break;
     }
+    
+    console.log(url, selectedType)
+    await rep.send(url);
   } catch (e) {
     console.error(e);
     rep.send(
