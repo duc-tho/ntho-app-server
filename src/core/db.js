@@ -1,19 +1,5 @@
 const { initializeApp, } = require("firebase/app");
 const { Sequelize } = require('sequelize');
-export const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: '/app/src/data/ntho.db'
-});
- 
-(async () => {
-  try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
-})()
-
 const {
   getDatabase,
   get,
@@ -81,3 +67,8 @@ exports.getToken = function getAccessToken() {
 };
 
 exports.db = new DBAction();
+
+exports.sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: '/app/src/data/ntho.db'
+});
