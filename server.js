@@ -1,7 +1,8 @@
 
 const axios = require("axios");
-const { fastify } = require('./src/init.js');
+const { fastify } = require('./src');
 const { router } = require('./src/router.js');
+const { RE_ACTIVE_TIME } = require('./src/core/constants/Common');
 
 new router(fastify).init();
 
@@ -18,4 +19,4 @@ setInterval(() => {
   axios.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/keep-active`)
     .then(() => console.log('Request keep active successfully!'))
     .catch(() => console.log('Request keep active failed!'));
-}, 120000);
+}, RE_ACTIVE_TIME);
