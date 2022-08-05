@@ -1,6 +1,6 @@
 const { initializeApp, } = require("firebase/app");
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize({
+export const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: '/app/src/data/ntho.db'
 });
