@@ -10,8 +10,14 @@ const Entities = [
   TiktokHistoryEntity
 ];
 
-Entities.forEach(({ NAME, FIELDS, OPTIONS }) => {
-  db.define(NAME, FIELDS, OPTIONS);
+console.log(Entities)
+
+Entities.forEach((entity) => {
+  const { NAME, FIELDS, OPTIONS } = entity;
+  
+  entity = db.define(NAME, FIELDS, OPTIONS);
 });
+
+console.log(Entities)
 
 exports.db = db;

@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 
-console.log(DataTypes)
-
 exports.TiktokHistoryEntity = {
   NAME: 'TiktokHistory',
   
@@ -13,23 +11,23 @@ exports.TiktokHistoryEntity = {
     },
     
     title: {
-      type: DataTypes.string,
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'Không có tiêu đề.'
     },
     
     url: {
-      type: DataTypes.string,
+      type: DataTypes.STRING,
       allowNull: false
     },
     
     wm: {
-      type: DataTypes.string,
+      type: DataTypes.STRING,
       allowNull: false
     },
   
     nwm: {
-      type: DataTypes.string,
+      type: DataTypes.STRING,
       allowNull: false
     }
     
