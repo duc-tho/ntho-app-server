@@ -1,4 +1,4 @@
-require('../entity');
+
 const { initializeApp, } = require("firebase/app");
 const { Sequelize } = require('sequelize');
 const {
