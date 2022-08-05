@@ -1,0 +1,67 @@
+const SfwTypes = [
+  "aka.sfw.neko",
+  "aka.sfw.wallpapers",
+  "aka.sfw.mobileWallpapers",
+  "neko.sfw.tickle",
+  "neko.sfw.slap",
+  "neko.sfw.poke",
+  "neko.sfw.pat",
+  "neko.sfw.neko",
+  "neko.sfw.meow",
+  "neko.sfw.lizard",
+  "neko.sfw.kiss",
+  "neko.sfw.hug",
+  "neko.sfw.foxGirl",
+  "neko.sfw.feed",
+  "neko.sfw.cuddle",
+  "neko.sfw.nekoGif",
+  "neko.sfw.holo",
+  "neko.sfw.smug",
+  "neko.sfw.woof",
+  "neko.sfw.spoiler",
+  "neko.sfw.wallpaper",
+  "neko.sfw.gecg",
+  "neko.sfw.avatar",
+  "neko.sfw.waifu"
+];
+
+const NsfwTypes = [
+  "aka.nsfw.cum",
+  "aka.sfw.lewdNeko",
+  "aka.sfw.lewdBomb",
+  "aka.nsfw.doujin",
+  "aka.nsfw.femdom",
+  "aka.nsfw.hentai",
+  "aka.nsfw.maid",
+  "aka.nsfw.maids",
+  "aka.nsfw.orgy",
+  "aka.nsfw.panties",
+  "aka.nsfw.wallpapers",
+  "aka.nsfw.mobileWallpapers",
+  "aka.nsfw.cuckold",
+  "aka.nsfw.netorare",
+  "aka.nsfw.gifs",
+  "aka.nsfw.gif",
+  "aka.nsfw.blowjob",
+  "aka.nsfw.feet",
+  "aka.nsfw.pussy",
+  "aka.nsfw.uglyBastard",
+  "aka.nsfw.uniform",
+  "aka.nsfw.gangbang",
+  "aka.nsfw.foxgirl",
+  "aka.nsfw.cumslut",
+  "aka.nsfw.glasses",
+  "aka.nsfw.thighs",
+  "aka.nsfw.tentacles",
+  "aka.nsfw.masturbation",
+  "aka.nsfw.school",
+  "aka.nsfw.yuri",
+  "aka.nsfw.zettaiRyouiki",
+  "aka.nsfw.succubus",
+];
+
+const DefaultAnimgUrl = 'https://64.media.tumblr.com/a186a898675f408b2a6b4bca5243744e/tumblr_ppwlhaQHuA1vqi0muo1_400.gifv';
+
+exports.SFW_TYPES = SfwTypes;
+exports.NSFW_TYPES = NsfwTypes;
+exports.DEFAULT_ANIMG_URL = DefaultAnimgUrl;
