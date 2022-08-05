@@ -1,6 +1,18 @@
+
 const { initializeApp, } = require("firebase/app");
-const { getDatabase, get, set, ref } = require("firebase/database");
+const { Sequelize } = require('sequelize');
+const {
+  getDatabase,
+  get,
+  set,
+  ref,
+  query,
+  endAt,
+  startAt,
+  orderByKey,
+} = require("firebase/database");
 const uuid = require("uuid");
+const { JWT } = require("google-auth-library");
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -14,7 +26,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-class FirebaseDatabase {
+class DBAction {
   constructor() {
     this.db = getDatabase(app);
   }
@@ -35,4 +47,24 @@ class FirebaseDatabase {
   }
 }
 
-exports.FirebaseDatabase = new FirebaseDatabase();
+exports.getToken = function getAccessToken() {
+  return new Promise(function (resolve, reject) {
+    const key = require("../../fbauth.json");
+    let jwtClient = new JWT(
+      key.client_email,
+      null,
+      key.private_key,
+      ["https://www.googleapis.com/auth/cloud-platform"],
+      null
+    );
+    jwtClient.authorize(function (err, tokens) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(tokens.access_token);
+    });
+  });
+};
+
+exports.db = new DBAction();

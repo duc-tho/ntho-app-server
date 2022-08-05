@@ -4,26 +4,24 @@ module.exports = {
     await queryInterface.createTable('TiktokHistories', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.INTEGER
+      },
+      id: {
+        type: Sequelize.UUID
       },
       title: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        defaultValue: 'Không có tiêu đề.'
+        type: Sequelize.STRING
       },
       nwm: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
       wm: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
       url: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
