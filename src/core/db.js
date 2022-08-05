@@ -1,3 +1,4 @@
+require('../entity');
 const { initializeApp, } = require("firebase/app");
 const { Sequelize } = require('sequelize');
 const {
@@ -67,8 +68,3 @@ exports.getToken = function getAccessToken() {
 };
 
 exports.db = new DBAction();
-
-exports.sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: '/app/src/data/ntho.db'
-});
