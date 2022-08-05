@@ -1,7 +1,6 @@
-const { tiktokController } = require("./controllers/tiktok.control");
-const { tiktokHistoryController } = require("./controllers/tiktok-history.control");
-const { webpushController } = require("./controllers/webpush.control");
-const { animeImageController } = require("./controllers/anime-image.control");
+const { AnimgController } = require("./controllers/AnimgController");
+const { TiktokController } = require("./controllers/TiktokController");
+const { WebPushController } = require("./controllers/WebPushController");
 
 class Router {
   constructor(fastify) {
@@ -9,21 +8,18 @@ class Router {
   }
 
   init() {
-    this.fastify.get("/api/tiktok", {}, tiktokController);
-
-    this.fastify.get("/api/history", {}, tiktokHistoryController.get);
-
-    this.fastify.post("/api/history", {}, tiktokHistoryController.save);
-
-    this.fastify.post("/api/savenoti", {}, webpushController.saveDeviceToken);
-
-    this.fastify.post("/api/pushnoti", {}, webpushController.push);
-
-    this.fastify.get("/api/animg", {}, animeImageController);
-
     this.fastify.get("/", {}, (req, res) => res.send('Api is running :3'));
-
     this.fastify.get("/keep-active", {}, (req, res) => res.send('Re-active :D'));
+
+    this.fastify.get("/api/tiktok", {}, TiktokController.download);
+
+    this.fastify.get("/api/history", {}, TiktokController.getHistory);
+    this.fastify.post("/api/history", {}, TiktokController.saveHistory);
+
+    this.fastify.post("/api/savenoti", {}, WebPushController.saveDeviceToken);
+    this.fastify.post("/api/pushnoti", {}, WebPushController.push);
+    
+    this.fastify.get("/api/animg", {}, AnimgController.getImageUrl);
   }
 }
 
