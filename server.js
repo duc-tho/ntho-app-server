@@ -1,7 +1,7 @@
 
 const axios = require("axios");
 const { fastify } = require('./src');
-const { router } = require('./src/router.js');
+const { router } = require('./src/router');
 const { RE_ACTIVE_TIME } = require('./src/core/constants/Common');
 
 new router(fastify).init();

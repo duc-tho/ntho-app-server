@@ -1,9 +1,10 @@
-const { verifyUrl, getIdFromUrl } = require("../core/Url");
+const { verifyUrl, getIdFromUrl } = require("../core/url");
 const { default: axios } = require("axios");
-const { Response } = require('../core/Response');
-const { FirebaseDatabase } = require('../core/Firebase');
+const { Response } = require('../core/response');
+const { FirebaseDatabase } = require('../core/firebase');
+const { models : { TiktokHistory } } = require('../core/database');
 
-class TiktokController {
+class TiktokControl {
   async download(request, reply) {
     let tiktokUrl = request.query["url"];
 
@@ -45,15 +46,31 @@ class TiktokController {
   }
 
   getHistory(req, rep) {
-    FirebaseDatabase.get('histories').then(data => rep.send(data.val()));
+    TiktokHistory.findAll({
+      attributes: ['id', 'UserId', "title", "url", "nwm", "createdAt"],
+      offset: req.pagination.offset, 
+      limit: req.pagination.limit,
+      order: [
+        ['createdAt', 'DESC']
+      ],
+    }).then(histories => {
+      rep.send(histories)   
+    });
   }
 
   saveHistory(req, rep) {
     if (!req.body) return Response.send(400, 'Hong có dữ liệu lịch sử để lưu', rep);
-
-    FirebaseDatabase.set('histories', req.body);
-    Response.send(200, 'Lưu thành công', rep);
+    const { nwm, title, wm, url } = req.body;
+    
+    const historyData = {
+      UserId: req.data.userId,
+      title, nwm, wm, url
+    }
+    
+    TiktokHistory.create(historyData)
+      .then(history => Response.send(200, 'Lưu thành công', rep))
+      .catch(err => Response.send(400, 'Lưu thất bại', rep));
   }
 }
 
-exports.TiktokController = new TiktokController();
+exports.TiktokController = new TiktokControl();

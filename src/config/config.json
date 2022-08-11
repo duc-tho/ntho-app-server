@@ -1,14 +1,10 @@
 {
   "development": {
-    "host": "app/src/data/ntho.db",
-    "dialect": "sqlite"
-  },
-  "test": {
-    "host": "app/src/data/ntho.db",
+    "host": "D:\/ntho-intern-1\/tikdown-server\/ndt-tt\/src\/data\/ntho.db",
     "dialect": "sqlite"
   },
   "production": {
-    "host": "app/src/data/ntho.db",
+    "host": "/app/src/data/ntho.db",
     "dialect": "sqlite"
   }
 }
