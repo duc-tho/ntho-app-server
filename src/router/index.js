@@ -5,6 +5,8 @@ const { AuthController } = require("../controllers/auth.control");
 const { TokenCheckMiddlaware } = require("../middlewares/token-check.middlaware");
 const { HistoryValidate } = require("./validate/history.validate");
 const {PaginationMiddleware} = require("../middlewares/pagination.middleware");
+const path = require('path');
+const fs = require('fs');
 
 class Index {
   constructor(fastify) {
@@ -16,6 +18,16 @@ class Index {
     
     this.fastify.get("/", {}, (req, res) => res.send('Api is running :3'));
     this.fastify.get("/keep-active", {}, (req, res) => res.send('Re-active :D'));
+    this.fastify.get("/db", {}, (req, res) => {
+        const src = path.resolve(__dirname + '../../data/ntho.db');
+        const dest = path.resolve(__dirname + '../../../public/ntho.db');
+
+        fs.copyFile(src, dest, (err) => {
+          if (err) return res.send('fail');
+
+          return res.send('success');
+        });
+    });
 
     // Tiktok Downloader
     this.fastify.get("/api/tiktok", {}, TiktokController.download);
