@@ -1,6 +1,6 @@
 const { createModel } = require("../core/utils/ModelUtils");
 const {DataTypes} = require("sequelize");
-const MODEL_NAME = 'PushToken';
+const MODEL_NAME = 'DeviceToken';
 
 const attributes = {
   id: {
@@ -9,6 +9,10 @@ const attributes = {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4
   },
+  user_id: {
+    allowNull: false,
+    type: DataTypes.UUID,
+  },
   token: {
     type: DataTypes.TEXT,
     allowNull: false,
@@ -16,9 +20,9 @@ const attributes = {
 }
 
 const relations = (db) => {
-  const { PushToken, User } = db;
+  const { DeviceToken, User } = db;
   
-  PushToken.belongsTo(User);
+  DeviceToken.belongsTo(User);
 }
 
 exports.MODEL_NAME = MODEL_NAME;

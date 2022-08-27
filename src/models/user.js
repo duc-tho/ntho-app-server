@@ -17,22 +17,15 @@ const attributes = {
   password: {
     allowNull: false,
     type: DataTypes.TEXT,
-  },
-  full_name: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    defaultValue: "Chưa đặt tên nè"
-  },
-  dob: {
-    type: DataTypes.DATE,
   }
 }
 
 const relations = (models) => {
-  const { User, TiktokHistory, PushToken } = models;
+  const { User, TiktokHistory, DeviceToken, Profile } = models;
   
   User.hasMany(TiktokHistory);
-  User.hasMany(PushToken);
+  User.hasMany(DeviceToken);
+  User.hasOne(Profile);
 }
 
 exports.MODEL_NAME = MODEL_NAME;

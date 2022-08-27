@@ -1,31 +1,24 @@
 'use strict';
 
 const { sequelize } = require("../database");
-const {DataTypes} = require("sequelize");
 
 const createModel = (modelName, attributes, relations = (models) => {}) => {
   let model = sequelize.define(
-    modelName, 
-    {
-      ...attributes,
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-      }
-    }, 
+    modelName, attributes,
     {
       sequelize,
       modelName: modelName,
-      paranoid: true,
+      underscored: true,
+      timestamps: false
     }
   );
   
   model.associate = relations;
   
+  model.prototype.getModelName = function () {
+    return modelName;
+  };
+
   return model;
 }
 

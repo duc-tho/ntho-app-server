@@ -7,6 +7,7 @@ const { HistoryValidate } = require("./validate/history.validate");
 const {PaginationMiddleware} = require("../middlewares/pagination.middleware");
 const path = require('path');
 const fs = require('fs');
+const { models: { User, DeviceToken, ChangeLog, Status, Profile }, models } = require("../core/database");
 
 class Index {
   constructor(fastify) {
@@ -60,6 +61,52 @@ class Index {
     this.fastify.post("/api/register", {}, AuthController.register);
     this.fastify.post("/api/login", {}, AuthController.login);
     this.fastify.post("/api/refresh", {}, AuthController.refresh);
+    this.fastify.get("/api/test", {}, async (req, res) => {
+      let result = await User.findAll({
+        where: {
+          id: '20aa5704-3376-4058-ae6c-65ee6ae55fc2'
+        },
+        attributes: {
+          exclude: ['password']
+        },
+        include: [
+          // {
+          //   model: Profile,
+          //   required: true,
+          //   attributes: {
+          //     exclude: ['UserId', 'id']
+          //   }
+          // },
+          {
+            model: Status,
+            required: true,
+            attributes: ['created_at', 'updated_at', 'deleted_at'],
+            where: {
+              deleted_at: null
+            }
+          },
+          {
+            model: ChangeLog,
+            attributes: [ 'created_at'],
+            required: true,
+            nest: true
+          },
+        ]
+      });
+
+      let user = await DeviceToken.findOne({
+        where: {
+          id: '3d51445c-4198-48ce-a849-625cf2467f78'
+        }
+      });
+
+
+      user.token = 'ádfasdfasdfasfasfasfasdfasdfasdf';
+
+      user.save();
+
+      res.send(result);
+    });
   }
 }
 

@@ -1,10 +1,16 @@
 {
   "development": {
-    "host": "D:\/ntho-intern-1\/tikdown-server\/ndt-tt\/src\/data\/ntho.db",
-    "dialect": "sqlite"
+    "storage": "D:\/ntho-intern-1\/tikdown-server\/ndt-tt\/.data\/ntho.db",
+    "dialect": "sqlite",
+    "define": {
+      "freezeTableName": true
+    }
   },
   "production": {
-    "host": "/app/src/data/ntho.db",
-    "dialect": "sqlite"
+    "storage": "/app/.data/ntho.db",
+    "dialect": "sqlite",
+    "define": {
+      "freezeTableName": true
+    }
   }
 }

@@ -10,8 +10,7 @@ const fastify = require("fastify")({
 });
 
 fastify.register(require("@fastify/static"), {
-  root: path.join(__dirname, "public"),
-  prefix: "/",
+  root: path.resolve(__dirname, "../public")
 });
 
 fastify.register(require("@fastify/formbody"));
