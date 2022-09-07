@@ -9,10 +9,6 @@ const attributes = {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4
   },
-  user_id: {
-    allowNull: false,
-    type: DataTypes.UUID,
-  },
   token: {
     type: DataTypes.TEXT,
     allowNull: false,

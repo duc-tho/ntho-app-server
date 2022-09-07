@@ -1,8 +1,7 @@
 const {default: axios} = require("axios");
-const {FirebaseDatabase} = require("../core/firebase");
 const {GoogleAuth} = require("../core/google-auth");
 const {Response} = require("../core/response");
-const {models: {PushToken}} = require("../core/database");
+const {models: {DeviceToken}} = require("../core/database");
 const {Op} = require("sequelize");
 
 class WebPushControl {
@@ -14,7 +13,7 @@ class WebPushControl {
     if (!req.body || !req.body.title || !req.body.body)
       return Response.send(400, 'Chưa có nội dung noti', rep);
 
-    let deviceTokens = await PushToken.findAll({
+    let deviceTokens = await DeviceToken.findAll({
       where: {
         UserId: {
           [Op.not]: req.data.userId
@@ -61,12 +60,9 @@ class WebPushControl {
   }
 
   async saveDeviceToken(req, rep) {
-    if (!req.body.deviceToken)
-      return Response.send(400, 'Không có token sao mà lưu :<', rep);
-
     const {deviceToken} = req.body;
 
-    let isTokenExists = !!(await PushToken.findOne({
+    let isTokenExists = !!(await DeviceToken.findOne({
       where: {
         token: deviceToken
       },
@@ -75,11 +71,14 @@ class WebPushControl {
 
     if (isTokenExists) return Response.send(400, 'Token đã tồn tại!', rep);
 
-    PushToken.create({
+    DeviceToken.create({
       UserId: req.data.userId,
       token: req.body.deviceToken
     }).then(() => Response.send(200, 'Lưu device token thành công', rep))
-      .catch(() => Response.send(500, 'Lưu device token thất bại', rep));
+      .catch((e) => {
+        console.log(e);
+        Response.send(500, 'Lưu device token thất bại', rep)
+      });
   }
 }
 

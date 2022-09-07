@@ -1,11 +1,8 @@
 'use strict';
 
 const fs = require('fs');
-const moment = require('moment/moment');
 const path = require('path');
-const { DataTypes } = require('sequelize');
 const { models, sequelize } = require('../core/database');
-const { getUTCTimeForDB } = require('../core/utils/time');
 const basename = path.basename(__filename);
 const ChangeLog = require('./change_log');
 const Status = require('./status');
@@ -55,7 +52,18 @@ Object.keys(models).forEach(modelName => {
     models[modelName].afterUpdate(async (instance) => {
       if (instance instanceof models[ChangeLog.name]) return;
       if (instance instanceof models[Status.name]) return;
-      console.log(instance);
+
+      let changes = {};
+
+      instance._changed.forEach((change) => {
+        changes[change] = {
+          from: instance._previousDataValues[change],
+          to: instance.dataValues[change]
+        }
+      });
+
+      console.log(changes);
+
       const instanceInfo = {
         row_id: instance.id,
         table: instance.getModelName(),
@@ -65,12 +73,7 @@ Object.keys(models).forEach(modelName => {
         ...instanceInfo,
         data: JSON.stringify({
           mode: 'update',
-          from: {
-            ...instance.dataValues
-          },
-          to: {
-            ...instance._previousDataValues,
-          }
+          ...changes
         })
       });
 

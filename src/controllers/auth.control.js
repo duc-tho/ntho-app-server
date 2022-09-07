@@ -1,6 +1,6 @@
 const { Response } = require("../core/response");
 const bcrypt = require("bcrypt");
-const { models: { User } } = require("../core/database");
+const { models: { User, Profile } } = require("../core/database");
 const {JWT} = require("../core/jwt");
 
 class AuthController {
@@ -49,10 +49,10 @@ class AuthController {
   }
 
   async register(request, reply) {
-    if (!request.body || !request.body.username || !request.body.password) 
+    if (!request.body || (request.body && (!request.body.username || !request.body.password, !request.body.fullname, !request.body.dob))) 
       return Response.send(401, "Thiếu thông tin", reply);
     
-    let { username, password } = request.body;
+    let { username, password, fullname, dob } = request.body;
 
     try {
       let user = await User.findOne({
@@ -65,6 +65,12 @@ class AuthController {
 
       user = await User.create({
         username, password
+      });
+
+      await Profile.create({
+        UserId: user.id,
+        full_name: fullname,
+        dob
       });
 
       const accessToken = await JWT.sign(user.id);

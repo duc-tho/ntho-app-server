@@ -13,7 +13,7 @@ class Response {
     response.send({
       code,
       success,
-      reason: message
+      result: message
     });
   }
 }

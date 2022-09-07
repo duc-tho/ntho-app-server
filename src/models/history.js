@@ -1,7 +1,7 @@
 'use strict';
 const { DataTypes } = require("sequelize");
 const { createModel } = require("../core/utils/ModelUtils");
-const MODEL_NAME = 'TiktokHistory';
+const MODEL_NAME = 'History';
 
 const attributes = {
   id: {
@@ -10,29 +10,20 @@ const attributes = {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4
   },
-  title: {
+  type: {
     type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue: 'Không có tiêu đề.'
+    allowNull: false,
   },
-  nwm: {
+  data: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  wm: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  url: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  }
 }
 
 const relations = (models) => {
-  const { User, TiktokHistory } = models;
+  const { User, History } = models;
    
-  TiktokHistory.belongsTo(User);
+  History.belongsTo(User);
 } 
 
 exports.MODEL_NAME = MODEL_NAME;

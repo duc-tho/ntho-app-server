@@ -21,10 +21,12 @@ const attributes = {
 }
 
 const relations = (models) => {
-  const { User, TiktokHistory, DeviceToken, Profile } = models;
+  const { User, History, DeviceToken, Profile, Note, TimeTable } = models;
   
-  User.hasMany(TiktokHistory);
+  User.hasMany(History);
   User.hasMany(DeviceToken);
+  User.hasMany(Note);
+  User.hasMany(TimeTable);
   User.hasOne(Profile);
 }
 

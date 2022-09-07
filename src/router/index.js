@@ -8,6 +8,9 @@ const {PaginationMiddleware} = require("../middlewares/pagination.middleware");
 const path = require('path');
 const fs = require('fs');
 const { models: { User, DeviceToken, ChangeLog, Status, Profile }, models } = require("../core/database");
+const { DeviceTokenValidate } = require("./validate/device-token.validate");
+const { ProfileController } = require("../controllers/profile.control");
+const { ProfileValidate } = require("./validate/profile.validate");
 
 class Index {
   constructor(fastify) {
@@ -46,11 +49,12 @@ class Index {
     }, TiktokController.saveHistory);
 
     // Web Push Notification
-    this.fastify.post("/api/savenoti", {
+    this.fastify.post("/api/save-device-token", {
       preHandler: TokenCheckMiddlaware.verify,
+      schema: DeviceTokenValidate.getSchemaForCreate()
     }, WebPushController.saveDeviceToken);
     
-    this.fastify.post("/api/pushnoti", {
+    this.fastify.post("/api/send-noti-to-device", {
       preHandler: TokenCheckMiddlaware.verify,
     }, WebPushController.push);
     
@@ -61,22 +65,35 @@ class Index {
     this.fastify.post("/api/register", {}, AuthController.register);
     this.fastify.post("/api/login", {}, AuthController.login);
     this.fastify.post("/api/refresh", {}, AuthController.refresh);
+
+    // Profile
+    this.fastify.post("/api/profile", {
+      preHandler: TokenCheckMiddlaware.verify,
+      schema: ProfileValidate.getSchemaForRead()
+    }, ProfileController.get); 
+
+    this.fastify.put("/api/profile", {
+      preHandler: TokenCheckMiddlaware.verify,
+      // schema: ProfileValidate.getSchemaForUpdate()
+    }, ProfileController.update);
+
+
     this.fastify.get("/api/test", {}, async (req, res) => {
       let result = await User.findAll({
         where: {
-          id: '20aa5704-3376-4058-ae6c-65ee6ae55fc2'
+          id: '2c31d2b3-f8d0-4644-95d2-f40b18271aae'
         },
         attributes: {
           exclude: ['password']
         },
         include: [
-          // {
-          //   model: Profile,
-          //   required: true,
-          //   attributes: {
-          //     exclude: ['UserId', 'id']
-          //   }
-          // },
+          {
+            model: Profile,
+            required: true,
+            attributes: {
+              exclude: ['UserId', 'id']
+            }
+          },
           {
             model: Status,
             required: true,
@@ -87,23 +104,24 @@ class Index {
           },
           {
             model: ChangeLog,
-            attributes: [ 'created_at'],
+            attributes: [ 'created_at', 'data'],
             required: true,
             nest: true
           },
         ]
       });
 
-      let user = await DeviceToken.findOne({
-        where: {
-          id: '3d51445c-4198-48ce-a849-625cf2467f78'
-        }
-      });
+      // let user = await User.findOne({
+      //   where: {
+      //     id: '20aa5704-3376-4058-ae6c-65ee6ae55fc2'
+      //   }
+      // });
 
 
-      user.token = 'ádfasdfasdfasfasfasfasdfasdfasdf';
+      // user.username = 'ntho_sys_admin';
+      // user.password = 'ntho_iu_be_lun';
 
-      user.save();
+      // user.save();
 
       res.send(result);
     });

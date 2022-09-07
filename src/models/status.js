@@ -34,9 +34,9 @@ const attributes = {
 }
 
 const relations = (models) => {
-  const { User, TiktokHistory, DeviceToken, Note, TimeTable, Status } = models;
+  const { User, History, DeviceToken, Note, TimeTable, Status } = models;
   
-  Status.belongsTo(TiktokHistory, { foreignKey: 'row_id' });
+  Status.belongsTo(History, { foreignKey: 'row_id' });
   Status.belongsTo(DeviceToken, { foreignKey: 'row_id' });
   Status.belongsTo(User, { foreignKey: 'row_id' });
   Status.belongsTo(Note, { foreignKey: 'row_id' });
