@@ -18,7 +18,7 @@ class ProfileController {
         },
         {
           model: ChangeLog,
-          attributes: [ 'created_at', 'data'],
+          attributes: [ 'created_at', 'created_by', 'data'],
           required: true,
           nest: true
         },
