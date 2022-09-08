@@ -1,7 +1,7 @@
 {
-  "name": "glitch-hello-node",
-  "version": "0.0.1",
-  "description": "A simple Node app built on fastify, instantly up and running. Built to be remixed on Glitch.com.",
+  "name": "ntho-app",
+  "version": "2.0",
+  "description": "Application make by ntho with love for pdan",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -31,7 +31,7 @@
     "node": "16"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/glitch-hello-node"
+    "url": "https://github.com/duc-tho/tikdown-server"
   },
   "license": "MIT",
   "keywords": [

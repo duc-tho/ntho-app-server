@@ -12,6 +12,8 @@ const { ProfileController } = require("../controllers/profile.control");
 const { ProfileValidate } = require("./validate/profile.validate");
 const { NoteController } = require("../controllers/note.control");
 const { NoteValidate } = require("./validate/note.validate");
+const { TimeTableController } = require('../controllers/time-table.control');
+const { TimeTableValidate } = require('./validate/time-table.validate');
 
 class Index {
   constructor(fastify) {
@@ -78,12 +80,12 @@ class Index {
     }, ProfileController.update);
 
     // Note
-    this.fastify.post("/api/notes", {
+    this.fastify.get("/api/note", {
       preHandler: TokenCheckMiddlaware.verify,
       // schema: NoteValidate.getSchemaForRead()
     }, NoteController.getAll);
 
-    this.fastify.post("/api/note/:id", {
+    this.fastify.get("/api/note/:id", {
       preHandler: TokenCheckMiddlaware.verify,
       // schema: NoteValidate.getSchemaForRead()
     }, NoteController.get);
@@ -97,6 +99,27 @@ class Index {
       preHandler: TokenCheckMiddlaware.verify,
       schema: NoteValidate.getSchemaForCreate()
     }, NoteController.update);
+
+    // Time table
+    this.fastify.get("/api/time-table", {
+      preHandler: TokenCheckMiddlaware.verify,
+      // schema: TimeTableValidate.getSchemaForRead()
+    }, TimeTableController.getAll);
+
+    this.fastify.get("/api/time-table/:id", {
+      preHandler: TokenCheckMiddlaware.verify,
+      // schema: TimeTableValidate.getSchemaForRead()
+    }, TimeTableController.get);
+
+    this.fastify.post("/api/time-table", {
+      preHandler: TokenCheckMiddlaware.verify,
+      schema: TimeTableValidate.getSchemaForCreate()
+    }, TimeTableController.create);
+
+    this.fastify.put("/api/time-table", {
+      preHandler: TokenCheckMiddlaware.verify,
+      schema: TimeTableValidate.getSchemaForCreate()
+    }, TimeTableController.update);
   }
 }
 

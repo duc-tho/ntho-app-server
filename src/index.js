@@ -28,7 +28,7 @@ fastify.setErrorHandler(function (error, request, reply) {
   if (error.validation) {
     return Response.send(422, `<${error.validationContext}> không hợp lệ!`, reply)
   } else {
-    return Response.send(500, error.message, reply)
+    return Response.send(500, error, reply)
   }
 });
 

@@ -84,6 +84,7 @@ class NoteController {
         {
           model: Status,
           required: true,
+          attributes: ['created_at', 'updated_at'],
           where: {
             deleted_at: null
           },
