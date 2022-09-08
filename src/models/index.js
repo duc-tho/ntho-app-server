@@ -26,65 +26,65 @@ Object.keys(models).forEach(modelName => {
 });
 
 Object.keys(models).forEach(modelName => {
-    models[modelName].afterCreate(async (instance) => {
-      if (instance instanceof models[ChangeLog.name]) return;
-      if (instance instanceof models[Status.name]) return;
+  models[modelName].afterCreate(async (instance) => {
+    if (instance instanceof models[ChangeLog.name]) return;
+    if (instance instanceof models[Status.name]) return;
 
-      const instanceInfo = {
-        row_id: instance.id,
-        table: instance.getModelName(),
-      };
+    const instanceInfo = {
+      row_id: instance.id,
+      table: instance.getModelName(),
+    };
 
-      const instanceChangeLog = await models[ChangeLog.name].create({
-        ...instanceInfo,
-        data: JSON.stringify({
-          mode: 'create',
-          ...instance.dataValues
-        })
-      });
+    const instanceChangeLog = await models[ChangeLog.name].create({
+      ...instanceInfo,
+      created_by: instance?.request?.data?.userId,
+      data: JSON.stringify({
+        mode: 'create',
+        ...instance.dataValues
+      })
+    });
 
-      const instanceStatus = await models[Status.name].create(instanceInfo);
+    const instanceStatus = await models[Status.name].create(instanceInfo);
 
-      instanceChangeLog.save();
-      instanceStatus.save();
-    }); 
+    instanceChangeLog.save();
+    instanceStatus.save();
+  });
 
-    models[modelName].afterUpdate(async (instance) => {
-      if (instance instanceof models[ChangeLog.name]) return;
-      if (instance instanceof models[Status.name]) return;
+  models[modelName].afterUpdate(async (instance) => {
+    if (instance instanceof models[ChangeLog.name]) return;
+    if (instance instanceof models[Status.name]) return;
 
-      let changes = {};
+    let changes = {};
 
-      instance._changed.forEach((change) => {
-        changes[change] = {
-          from: instance._previousDataValues[change],
-          to: instance.dataValues[change]
-        }
-      });
+    instance._changed.forEach((change) => {
+      changes[change] = {
+        from: instance._previousDataValues[change],
+        to: instance.dataValues[change]
+      }
+    });
 
-      console.log(changes);
+    const instanceInfo = {
+      row_id: instance.id,
+      table: instance.getModelName()
+    };
 
-      const instanceInfo = {
-        row_id: instance.id,
-        table: instance.getModelName(),
-      };
+    const instanceChangeLog = await models[ChangeLog.name].create({
+      ...instanceInfo,
+      created_by: instance?.request?.data?.userId,
+      data: JSON.stringify({
+        mode: 'update',
+        ...changes
+      })
+    });
 
-      const instanceChangeLog = await models[ChangeLog.name].create({
-        ...instanceInfo,
-        data: JSON.stringify({
-          mode: 'update',
-          ...changes
-        })
-      });
+    const instanceStatus = await models[Status.name].findOne({
+      where: instanceInfo
+    });
 
-      const instanceStatus = await models[Status.name].findOne({
-        where: instanceInfo
-      });
+    instanceStatus.updated_at = sequelize.fn('DATETIME')
 
-      instanceStatus.updated_at = sequelize.fn('DATETIME')
-
-      instanceChangeLog.save();
-      instanceStatus.save();
-    }); 
+    instanceChangeLog.save();
+    instanceStatus.save();
+  });
 });
 

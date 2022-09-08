@@ -25,6 +25,10 @@ const attributes = {
     allowNull: false,
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
+  },
+  created_by: {
+    allowNull: true,
+    type: DataTypes.UUID
   }
 }
 

@@ -1,6 +1,3 @@
-const {Response} = require("../core/response");
-const {JWT} = require("../core/jwt");
-
 class PaginationMiddleware {
   index(request, reply, next) {
     let limit = 20;

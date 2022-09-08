@@ -73,8 +73,7 @@ class Index {
     }, ProfileController.get); 
 
     this.fastify.put("/api/profile", {
-      preHandler: TokenCheckMiddlaware.verify,
-      // schema: ProfileValidate.getSchemaForUpdate()
+      preHandler: TokenCheckMiddlaware.verify
     }, ProfileController.update);
 
 
