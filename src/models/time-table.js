@@ -17,7 +17,7 @@ const attributes = {
 
 const relations = (models) => {
   const { User, TimeTable } = models;
-  
+
   TimeTable.belongsTo(User);
 }
 

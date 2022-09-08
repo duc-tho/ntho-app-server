@@ -46,7 +46,7 @@ const attributes = {
 
 const relations = (models) => {
   const { User, Profile } = models;
-  
+
   Profile.belongsTo(User);
 }
 

@@ -1,5 +1,5 @@
 const { createModel } = require("../core/utils/ModelUtils");
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const MODEL_NAME = 'DeviceToken';
 
 const attributes = {
@@ -17,7 +17,7 @@ const attributes = {
 
 const relations = (db) => {
   const { DeviceToken, User } = db;
-  
+
   DeviceToken.belongsTo(User);
 }
 

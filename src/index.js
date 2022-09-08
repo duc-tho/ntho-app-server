@@ -1,7 +1,7 @@
 require('dotenv').config();
 require('./models');
 const path = require('path');
-const {Response} = require("./core/response");
+const { Response } = require("./core/response");
 const fastify = require("fastify")({
   logger: false,
 });

@@ -22,9 +22,9 @@ const attributes = {
 
 const relations = (models) => {
   const { User, History } = models;
-   
+
   History.belongsTo(User);
-} 
+}
 
 exports.MODEL_NAME = MODEL_NAME;
 module.exports = createModel(MODEL_NAME, attributes, relations);

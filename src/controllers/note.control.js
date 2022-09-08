@@ -20,7 +20,7 @@ class NoteController {
         },
         {
           model: ChangeLog,
-          attributes: [ 'created_at', 'created_by', 'data'],
+          attributes: ['created_at', 'created_by', 'data'],
           required: true,
           nest: true
         },
@@ -45,7 +45,7 @@ class NoteController {
         },
         {
           model: ChangeLog,
-          attributes: [ 'created_at', 'created_by', 'data'],
+          attributes: ['created_at', 'created_by', 'data'],
           required: true,
           nest: true
         },
@@ -77,8 +77,8 @@ class NoteController {
     const NoteId = request?.body?.noteId;
 
     let note = await Note.findOne({
-      where: { 
-        id: NoteId  
+      where: {
+        id: NoteId
       },
       include: [
         {
@@ -103,7 +103,7 @@ class NoteController {
       background: request?.body?.background ?? note['background'],
       pin: request?.body?.pin ?? note['pin'],
     });
-    
+
     await note.save();
 
     return Response.send(200, note, response);

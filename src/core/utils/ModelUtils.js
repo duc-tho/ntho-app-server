@@ -2,7 +2,7 @@
 
 const { sequelize } = require("../database");
 
-const createModel = (modelName, attributes, relations = (models) => {}) => {
+const createModel = (modelName, attributes, relations = (models) => { }) => {
   let model = sequelize.define(
     modelName, attributes,
     {
@@ -12,9 +12,9 @@ const createModel = (modelName, attributes, relations = (models) => {}) => {
       timestamps: false
     }
   );
-  
+
   model.associate = relations;
-  
+
   model.prototype.getModelName = function () {
     return modelName;
   };

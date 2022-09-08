@@ -22,7 +22,7 @@ const attributes = {
 
 const relations = (models) => {
   const { User, History, DeviceToken, Profile, Note, TimeTable } = models;
-  
+
   User.hasMany(History);
   User.hasMany(DeviceToken);
   User.hasMany(Note);

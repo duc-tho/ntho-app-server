@@ -7,7 +7,7 @@ exports.JWT = new (class JWT {
   async sign(userId, isRefreshToken = false) {
     const tokenSecret = !isRefreshToken ? process.env.ACCESS_TOKEN_SECRET : process.env.REFRESH_TOKEN_SECRET;
     const tokenLife = !isRefreshToken ? process.env.ACCESS_TOKEN_LIFE : process.env.REFRESH_TOKEN_LIFE;
-    
+
     let accessToken = await sign(
       { userId: userId },
       tokenSecret,
@@ -24,7 +24,7 @@ exports.JWT = new (class JWT {
 
   async verify(token, isRefreshToken = false) {
     const tokenSecret = !isRefreshToken ? process.env.ACCESS_TOKEN_SECRET : process.env.REFRESH_TOKEN_SECRET;
-    
+
     let decoded = await verify(token, tokenSecret, {
       ignoreExpiration: true,
     });

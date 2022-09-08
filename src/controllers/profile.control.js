@@ -18,7 +18,7 @@ class ProfileController {
         },
         {
           model: ChangeLog,
-          attributes: [ 'created_at', 'created_by', 'data'],
+          attributes: ['created_at', 'created_by', 'data'],
           required: true,
           nest: true
         },
@@ -60,7 +60,7 @@ class ProfileController {
       weight: request?.body?.weight ?? profile['weight'],
       social: request?.body?.social ?? profile['social'],
     });
-    
+
     await profile.save();
 
     return Response.send(200, profile, response);
