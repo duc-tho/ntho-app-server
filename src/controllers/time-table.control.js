@@ -1,5 +1,6 @@
 const { Response } = require("../core/response");
 const { models: { TimeTable, Status, ChangeLog } } = require('../core/database');
+const { STATUS_CODE } = require("../core/constants/Code");
 
 class TimeTableController {
   async get(request, response) {
@@ -27,9 +28,9 @@ class TimeTableController {
       ]
     });
 
-    if (timeTable) return Response.send(200, timeTable, response);
+    if (timeTable) return Response.send(STATUS_CODE.OK, null, response, timeTable);
 
-    return Response.send(404, 'Không tìm được thời khóa biểu!', response);
+    return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được thời khóa biểu!', response);
   }
 
   async getAll(request, response) {
@@ -52,9 +53,9 @@ class TimeTableController {
       ]
     });
 
-    if (timeTables) return Response.send(200, timeTables, response);
+    if (timeTables) return Response.send(STATUS_CODE.OK, null, response, timeTables);
 
-    return Response.send(404, 'Không tìm được thời khóa biểu nào!', response);
+    return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được thời khóa biểu nào!', response);
   }
 
   async create(request, response) {
@@ -63,7 +64,7 @@ class TimeTableController {
       data: request.body.data
     });
 
-    return Response.send(200, timeTable, response);
+    return Response.send(STATUS_CODE.OK, null, response, timeTable);
   }
 
   async update(request, response) {
@@ -85,7 +86,7 @@ class TimeTableController {
       ]
     });
 
-    if (!timeTable) return Response.send(404, 'Không tìm được thời khóa biểu!', response);
+    if (!timeTable) return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được thời khóa biểu!', response);
 
     await timeTable.update({
       title: request?.body?.title ?? timeTable['title'],
@@ -94,7 +95,7 @@ class TimeTableController {
 
     await timeTable.save();
 
-    return Response.send(200, timeTable, response);
+    return Response.send(STATUS_CODE.OK, null, response, timeTable);
   }
 }
 

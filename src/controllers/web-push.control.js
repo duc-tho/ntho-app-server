@@ -3,6 +3,7 @@ const { GoogleAuth } = require("../core/google-auth");
 const { Response } = require("../core/response");
 const { models: { DeviceToken } } = require("../core/database");
 const { Op } = require("sequelize");
+const { STATUS_CODE } = require("../core/constants/Code");
 
 class WebPushControl {
   async push(req, rep) {
@@ -11,7 +12,7 @@ class WebPushControl {
     let sendSuccess = 0;
 
     if (!req.body || !req.body.title || !req.body.body)
-      return Response.send(400, 'Chưa có nội dung noti', rep);
+      return Response.send(STATUS_CODE.BAD_REQUEST, 'Chưa có nội dung noti', rep);
 
     let deviceTokens = await DeviceToken.findAll({
       where: {
@@ -22,7 +23,7 @@ class WebPushControl {
       attributes: ['token']
     });
 
-    if (deviceTokens.length === 0) return Response.send(400, 'Chưa có thiết bị nào', rep);
+    if (deviceTokens.length === 0) return Response.send(STATUS_CODE.BAD_REQUEST, 'Chưa có thiết bị nào', rep);
 
     // Remove duplicate if have
     const uniqueDeviceTokens = deviceTokens.filter((deviceToken, index, self) => self.indexOf(deviceToken) === index);
@@ -55,8 +56,8 @@ class WebPushControl {
 
     await Promise.all(sendPromises);
 
-    if (sendSuccess) return Response.send(200, `Send push noti thành công tới ${sendSuccess} thiết bị`, rep);
-    else return Response.send(400, 'Send push noti thất bại', rep);
+    if (sendSuccess) return Response.send(STATUS_CODE.OK, `Send push noti thành công tới ${sendSuccess} thiết bị`, rep);
+    else return Response.send(STATUS_CODE.BAD_REQUEST, 'Send push noti thất bại', rep);
   }
 
   async saveDeviceToken(req, rep) {
@@ -69,15 +70,15 @@ class WebPushControl {
       attributes: ['token']
     }));
 
-    if (isTokenExists) return Response.send(400, 'Token đã tồn tại!', rep);
+    if (isTokenExists) return Response.send(STATUS_CODE.BAD_REQUEST, 'Token đã tồn tại!', rep);
 
     DeviceToken.create({
       UserId: req.data.userId,
       token: req.body.deviceToken
-    }).then(() => Response.send(200, 'Lưu device token thành công', rep))
+    }).then(() => Response.send(STATUS_CODE.OK, 'Lưu device token thành công', rep))
       .catch((e) => {
         console.log(e);
-        Response.send(500, 'Lưu device token thất bại', rep)
+        Response.send(STATUS_CODE.SERVER_ERROR, 'Lưu device token thất bại', rep)
       });
   }
 }

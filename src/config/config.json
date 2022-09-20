@@ -1,6 +1,6 @@
 {
   "development": {
-    "storage": "D:\/ntho-intern-1\/tikdown-server\/ndt-tt\/.data\/ntho.db",
+    "storage": "/home/ntho/personal/tikdown-server/.data/ntho.db",
     "dialect": "sqlite",
     "define": {
       "freezeTableName": true

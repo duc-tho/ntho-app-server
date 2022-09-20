@@ -2,16 +2,17 @@ const { verifyUrl, getIdFromUrl } = require("../core/url");
 const { default: axios } = require("axios");
 const { Response } = require('../core/response');
 const { models: { History, Status } } = require('../core/database');
+const { STATUS_CODE } = require("../core/constants/Code");
 
 class TiktokControl {
   async download(request, reply) {
     let tiktokUrl = request.query["url"];
 
-    if (!tiktokUrl) return Response.send(400, 'Chưa nhập link', reply);
+    if (!tiktokUrl) return Response.send(STATUS_CODE.NOT_FOUND, 'Chưa nhập link', reply);
 
     let domain = verifyUrl(tiktokUrl)[0];
 
-    if (!domain) return Response.send(400, 'Link không hợp lệ', reply);
+    if (!domain) return Response.send(STATUS_CODE.NOT_FOUND, 'Link không hợp lệ', reply);
 
     let id = await getIdFromUrl(tiktokUrl);
 
@@ -28,7 +29,7 @@ class TiktokControl {
       id = getIdFromUrl(tiktokUrl)
     }
 
-    if (!id) return Response.send(400, 'Không thể lấy dữ liệu video!', reply);
+    if (!id) return Response.send(STATUS_CODE.NOT_FOUND, 'Không thể lấy dữ liệu video!', reply);
 
     axios.get(`https://api.tiktokv.com/aweme/v1/aweme/detail/?aweme_id=${id}`).then((response) => {
       return reply.send({
@@ -40,7 +41,7 @@ class TiktokControl {
       });
     }).catch(e => {
       console.log(e);
-      return Response.send(400, 'Không thể lấy dữ liệu video! Có thể là lỗi api tiktok', reply);
+      return Response.send(STATUS_CODE.NOT_FOUND, 'Không thể lấy dữ liệu video! Có thể là lỗi api tiktok', reply);
     });
   }
 
@@ -79,7 +80,7 @@ class TiktokControl {
   }
 
   saveHistory(req, rep) {
-    if (!req.body) return Response.send(400, 'Hong có dữ liệu lịch sử để lưu', rep);
+    if (!req.body) return Response.send(STATUS_CODE.NOT_FOUND, 'Hong có dữ liệu lịch sử để lưu', rep);
     const { nwm, title, wm, url } = req.body;
 
     const historyData = {
@@ -89,8 +90,8 @@ class TiktokControl {
     }
 
     History.create(historyData)
-      .then(history => Response.send(200, 'Lưu thành công', rep))
-      .catch(err => Response.send(400, 'Lưu thất bại', rep));
+      .then(history => Response.send(STATUS_CODE.OK, 'Lưu thành công', rep))
+      .catch(err => Response.send(STATUS_CODE.NOT_FOUND, 'Lưu thất bại', rep));
   }
 }
 

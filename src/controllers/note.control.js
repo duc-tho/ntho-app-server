@@ -1,12 +1,11 @@
 const { Response } = require("../core/response");
 const { models: { Note, Status, ChangeLog } } = require('../core/database');
+const { STATUS_CODE } = require("../core/constants/Code");
 
 class NoteController {
   async get(request, response) {
     const NoteId = request?.params?.id;
-
-    console.log(request.params);
-
+    
     let note = await Note.findOne({
       where: { id: NoteId },
       include: [
@@ -27,9 +26,9 @@ class NoteController {
       ]
     });
 
-    if (note) return Response.send(200, note, response);
+    if (note) return Response.send(STATUS_CODE.OK, null, response, note);
 
-    return Response.send(404, 'Không tìm được ghi chú!', response);
+    return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được ghi chú!', response);
   }
 
   async getAll(request, response) {
@@ -52,9 +51,9 @@ class NoteController {
       ]
     });
 
-    if (notes) return Response.send(200, notes, response);
+    if (notes) return Response.send(STATUS_CODE.OK, null, response, notes);
 
-    return Response.send(404, 'Không tìm được ghi chú nào!', response);
+    return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được ghi chú nào!', response);
   }
 
   async create(request, response) {
@@ -70,7 +69,7 @@ class NoteController {
       pin: !!request?.body?.pin,
     });
 
-    return Response.send(200, note, response);
+    return Response.send(STATUS_CODE.OK, null, response, note);
   }
 
   async update(request, response) {
@@ -92,7 +91,7 @@ class NoteController {
       ]
     });
 
-    if (!note) return Response.send(404, 'Không tìm được ghi chú!', response);
+    if (!note) return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được ghi chú!', response);
 
     await note.update({
       title: request?.body?.title ?? note['title'],
@@ -107,7 +106,7 @@ class NoteController {
 
     await note.save();
 
-    return Response.send(200, note, response);
+    return Response.send(STATUS_CODE.OK, null, response, note);
   }
 }
 
