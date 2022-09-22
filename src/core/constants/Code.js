@@ -1,4 +1,4 @@
-export const STATUS_CODE = {
+exports.STATUS_CODE = {
     OK: 200,
     CREATED: 201,
 
