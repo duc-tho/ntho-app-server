@@ -31,13 +31,13 @@ class TiktokControl {
 
     if (!id) return Response.send(STATUS_CODE.NOT_FOUND, 'Không thể lấy dữ liệu video!', reply);
 
-    axios.get(`https://api.tiktokv.com/aweme/v1/aweme/detail/?aweme_id=${id}`).then((response) => {
+    axios.get(`https://api.douyin.wtf/api?url=${tiktokUrl}`).then((response) => {
       return reply.send({
         'status': 'success',
         'url_type': 'video',
-        'video_title': response.data["aweme_detail"]["desc"],
-        'nwm_video_url': response.data["aweme_detail"]["video"]["play_addr"]["url_list"][0],
-        'wm_video_url': response.data["aweme_detail"]["video"]['download_addr']['url_list'][0] || 'None',
+        'video_title': response.data["video_title"],
+        'nwm_video_url': response.data["nwm_video_url"],
+        'wm_video_url': response.data["wm_video_url"] || 'None',
       });
     }).catch(e => {
       console.log(e);
