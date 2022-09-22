@@ -68,6 +68,7 @@ class Index {
     this.fastify.post("/api/register", {}, AuthController.register);
     this.fastify.post("/api/login", {}, AuthController.login);
     this.fastify.post("/api/refresh", {}, AuthController.refresh);
+    this.fastify.post("/api/validate", {}, AuthController.validate);
 
     // Profile
     this.fastify.post("/api/profile", {

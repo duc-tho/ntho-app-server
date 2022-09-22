@@ -26,7 +26,12 @@ class AuthController {
 
     const { accessToken } = request.body;
 
-    let decoded = await JWT.verify(accessToken);
+    let decoded = null;
+    
+    try {
+      decoded = await JWT.verify(accessToken);
+    } catch (error) {}
+    
     if (!decoded) return Response.send(STATUS_CODE.UN_AUTHORIZED, "Access token không hợp lệ", reply);
 
     return Response.send(STATUS_CODE.OK, "Xác thực thành công!", reply);

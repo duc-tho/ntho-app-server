@@ -15,7 +15,7 @@ class Response {
       success,
       result: {
         message,
-        data: typeof data !== "object" && !Array.isArray(data) ? data : {}
+        data: typeof data !== "object" && !Array.isArray(data) ? {} : data
       }
     });
   }
