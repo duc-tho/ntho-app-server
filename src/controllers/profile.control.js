@@ -26,7 +26,7 @@ class ProfileController {
       ]
     });
 
-    if (profile) return Response.send(STATUS_CODE.OK, profile, response);
+    if (profile) return Response.send(STATUS_CODE.OK, null, response, profile);
 
     return Response.send(STATUS_CODE.NOT_FOUND, 'Không tìm được hồ sơ người dùng!', response);
   }
@@ -64,7 +64,7 @@ class ProfileController {
 
     await profile.save();
 
-    return Response.send(STATUS_CODE.OK, profile, response);
+    return Response.send(STATUS_CODE.OK, null, response, profile);
   }
 }
 

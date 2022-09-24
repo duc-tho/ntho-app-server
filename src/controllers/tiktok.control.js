@@ -1,7 +1,7 @@
 const { verifyUrl, getIdFromUrl } = require("../core/url");
 const { default: axios } = require("axios");
 const { Response } = require('../core/response');
-const { models: { History, Status } } = require('../core/database');
+const { models: { History, Status, Profile, User } } = require('../core/database');
 const { STATUS_CODE } = require("../core/constants/Code");
 
 class TiktokControl {
@@ -71,8 +71,18 @@ class TiktokControl {
           attributes: ['created_at'],
           where: {
             deleted_at: null
-          },
+          }
         },
+        {
+          model: User,
+          required: true,
+          include: [
+            {
+              model: Profile,
+              required: true,
+            }
+          ],
+        }
       ]
     }).then(histories => {
       rep.send(histories)
